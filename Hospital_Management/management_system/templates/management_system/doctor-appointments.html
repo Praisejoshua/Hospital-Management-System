@@ -1,0 +1,88 @@
+{% extends "management_system/base.html" %} {% block content %}
+<div class="doctor-appointments-body">
+  <h1><b>Appointment Manager</b></h1>
+  <div class="doctor-appointments-body-content">
+    <h3><b>Incoming Appointments</b></h3>
+    <table>
+      {% if appointments %}
+      <thead>
+        <tr>
+          <th class="appointments-table-header">Patient</th>
+          <th class="appointments-table-header">Date</th>
+          <th class="appointments-table-header">Status</th>
+          <th class="appointments-table-header">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for appointment in appointments %}
+        <tr class="doctor-appointments-row">
+          <td class="appointments-content">{{ appointment.patient_name }}</td>
+          <td class="appointments-content">
+            {{ appointment.appointment_date }}
+          </td>
+          <td class="appointments-content">{{ appointment.status }}</td>
+          <td class="appointments-content">
+            <div class="appointment-button-group">
+              <form
+                method="post"
+                action="{% url 'handle_appointment' appointment.id 0 %}?action=accept"
+              >
+                {% csrf_token %}
+                <button class="accept-btn" type="submit">Accept</button>
+              </form>
+              <form
+                method="post"
+                action="{% url 'handle_appointment' appointment.id 0 %}?action=reject"
+              >
+                {% csrf_token %}
+                <button type="submit" class="reject-btn">Reject</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %} {% else %}
+        <p>No appointments found</p>
+      </tbody>
+      {% endif %}
+    </table>
+  </div>
+  <hr>
+  <div class="doctor-appointments-body-content">
+    <h3><b>Accepted Appointments</b></h3>
+    <table>
+      {% if accepted_appointments %}
+      <thead>
+        <tr>
+          <th class="appointments-table-header">Patient</th>
+          <th class="appointments-table-header">Date</th>
+          <th class="appointments-table-header">Status</th>
+          <th class="appointments-table-header">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for accepted in accepted_appointments %}
+        <tr class="doctor-appointments-row">
+          <td class="appointments-content">{{ accepted.patient_name }}</td>
+          <td class="appointments-content">
+            {{ accepted.appointment_date }}
+          </td>
+          <td class="appointments-content">{{ accepted.status }}</td>
+          <td class="appointments-content">
+            <div class="appointment-button-group">
+              <form
+                method="post"
+                action="{% url 'handle_appointment' accepted.id accepted.id %}?action=complete">
+                {% csrf_token %}
+                <button type="submit" class="end-btn">End</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %} {% else %}
+        <p>You have no accepted appointments currently</p>
+      </tbody>
+      {% endif %}
+    </table>
+  </div>
+</div>
+{% endblock %}

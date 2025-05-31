@@ -1,0 +1,158 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", "Times New Roman";
+}
+
+body {
+  background-color: #f7f9fc;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.login-section,
+.register-section {
+  max-width: 45vw;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px #0f172a;
+  padding: 10px;
+}
+
+/* Content */
+.content {
+  min-height: 70vh;
+}
+
+#message-container {
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  padding: 1rem;
+  font-weight: 500;
+}
+
+/* Footer */
+.footer {
+  background: white;
+  color: black;
+  padding: 0 0 20px 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.footer-content {
+  text-align: center;
+  border-top: 1px solid #444;
+  padding-top: 15px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* Login and Register page */
+.login-flex,
+.register-flex {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+/* === Left Section (Image) === */
+.login-section-left,
+.register-section-left {
+  flex: 1;
+  background-color: #e9ecef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-section-left img,
+.register-section-left img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.login-section-left img {
+  max-height: 100vh;
+}
+/* === Right Section (Form Area) === */
+.login-section-right,
+.register-section-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 10rem 2rem 2rem 2rem;
+  background-color: #ffffff;
+}
+
+.login-section-right {
+  height: 100vh;
+}
+
+.login-form,
+.register-form {
+  width: 100%;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.login-form-container,
+.register-form-container {
+  width: 100%;
+}
+
+legend {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* === Buttons === */
+.login-btn,
+.register-btn {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  border: 1px solid #0f172a;
+  color: #0f172a;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover,
+.register-btn:hover {
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+/* Bottom text */
+.register-bottom-text, .login-bottom-text {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #dee2e6;
+  text-align: center;
+  width: 100%;
+}
+
+.register-bottom-text a, .login-bottom-text a {
+  color: #0f172a;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-bottom-text a:hover, .login-bottom-text a:hover {
+  text-decoration: underline;
+}

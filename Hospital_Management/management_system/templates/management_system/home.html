@@ -1,0 +1,33 @@
+{% extends "management_system/base.html" %}
+{% block content %}
+<div class="homepage">
+    <h1>HOSPITAL MANAGEMENT SYSTEM</h1>
+    <div class="homepage-body-left">
+        <h2><b>Manage Student<br>Health with Ease</b></h2>
+        <span>An all-in-one platform for student medical <br>
+        records, appointments and reports</span>
+        <a href="{% url 'register' %}">Get Started</a>
+    </div>
+    <div class="homepage-body-right">
+        <img src="" alt="">
+    </div>
+    <div class="homepage-bottom">
+        <div class="homepage-bottom-content">
+            <i class='bx  bx-calendar-alt'></i> 
+            <span>Appointment<br>Scheduling</span>
+        </div>
+        <div class="homepage-bottom-content">
+            <i class='bx  bx-pill-bottle-alt'></i> 
+            <span>Medical<br>Inventory</span>
+        </div>
+        <div class="homepage-bottom-content">
+            <i class='bx  bx-chart-bar-big-columns'></i> 
+            <span>Health<br>Reports</span>
+        </div>
+        <div class="homepage-bottom-content">
+            <i class='bx  bx-user-circle'></i> 
+            <span>Student<br>Feedback</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

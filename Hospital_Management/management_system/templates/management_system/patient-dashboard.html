@@ -1,0 +1,224 @@
+{% extends "management_system/base.html" %} {% block content %}
+<div class="dashboard-container">
+  <h1>WELCOME BACK, {{ user.username }}</h1>
+  <div class="dashboard-top-content">
+    <div class="dashboard-top-content-box">
+      <h3>18-05-2025</h3>
+      <span
+        >Upcoming<br />
+        Appointment</span
+      >
+    </div>
+    <div class="dashboard-top-content-box">
+      <h3>0</h3>
+      <span
+        >Active<br />
+        Prescriptions</span
+      >
+    </div>
+    <div class="dashboard-top-content-box">
+      <h3>17-04-2025</h3>
+      <span
+        >Last<br />
+        Clinic Visit</span
+      >
+    </div>
+    <div class="dashboard-top-content-box">
+      <h3>Report</h3>
+      <span
+        >Request<br />
+        Medical Report</span
+      >
+    </div>
+  </div>
+  <div class="patient-dashboard-middle-content">
+    <div class="patient-dashboard-middle-content-left">
+      <div class="patient-middle-content-appointment">
+        <div class="patient-middle-content-book">
+          <h3>Book<br />Appointment</h3>
+          <button type="submit" class="appointment-btn">
+            <i class="fas fa-clipboard-list"></i><br />Book
+          </button>
+        </div>
+        <div class="patient-middle-content-missed">
+          <h3>Missed<br />Appointments</h3>
+          <button type="submit" class="appointment-btn">
+            <i class="fa-solid fa-trash"></i><br />Delete
+          </button>
+        </div>
+      </div>
+      <div class="patient-dashboard-history">
+        <table>
+          <h3><b>Upcoming Appointments</b></h3>
+          {% if appointments %}
+          <thead>
+            <tr>
+              <th class="histroy-table-header">Date</th>
+              <th class="history-table-header">Doctor</th>
+              <th class="history-table-header">Reason</th>
+              <th class="history-table-header">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for appointment in appointments %}
+            <tr class="patient-history-row">
+              <td class="history-content">{{ appointment.appointment_date }}</td>
+              <td class="history-content">{{ appointment.doctor_selected }}</td>
+              <td class="history-content">{{ appointment.patient_purpose }}</td>
+              <td class="history-content">{{ appointment.status }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <p>No appointments found</p>
+          </tbody>
+          {% endif %}
+        </table>
+        <a href="{% url 'medical-history' %}" class="history-link">View More</a>
+      </div>
+    </div>
+    <div class="patient-dashboard-middle-content-right">
+      <button type="submit" id="health-tip-btn">
+        <div class="patient-dashboard-right-content health-tip">
+          <h2>Health Tips</h2>
+          <span>Simple tips to keep you healthier</span>
+        </div>
+      </button>
+      <a href="{% url 'ai-assistant' %}">
+        <div class="patient-dashboard-right-content ai">
+          <h2>A.I.</h2>
+          <span>Your Intelligent Health Assistant</span>
+        </div>
+      </a>
+      <a href="{% url 'insights' %}">
+        <div class="patient-dashboard-right-content insights">
+          <h2>Insights</h2>
+          <span>Overview and Trends</span>
+        </div>
+      </a>
+      <a href="{% url 'patient-profile' %}">
+        <div class="patient-dashboard-right-content profile">
+          <h2>Profile</h2>
+          <span>Manage your Personal Info</span>
+        </div>
+      </a>
+      <button type="submit" id="emergency-btn">
+        <div class="patient-dashboard-right-content emergency">
+          <h2>Emergency Contacts</h2>
+          <span>Essential info for Urgent Support</span>
+        </div>
+      </button>
+    </div>
+  </div>
+  <!-- Popup Modal -->
+  <div id="appointmentModal" class="modal">
+    <div class="appointment-modal-body">
+      <span class="appointment-close-btn">&times;</span>
+      <h3>Book Appointment</h3>
+      <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Submit</button>
+      </form>
+      {% if success %}
+      <p>Form submitted successfully!</p>
+      {% endif %}
+    </div>
+  </div>
+  <div id="emergencyModal" class="modal">
+    <div class="emergency-modal-body">
+      <span class="emergency-close-btn">&times;</span>
+      <h2><b>EMERGENCY CONTACTS</b></h2>
+      <div class="emergency-modal-content">
+        <h5>MEDICAL CENTER</h5>
+        <span>08123456789</span><br /><br />
+        <h5>MEDICAL AMBULANCE</h5>
+        <span>08123456789</span><br /><br />
+        <h5>STUDENT AFFAIRS UNIT</h5>
+        <span>08123456789</span><br /><br />
+        <h5>CAMPUS SECURITY</h5>
+        <span>08123456789</span>
+      </div>
+    </div>
+  </div>
+  <div id="health-tip-modal" class="modal">
+    <div class="health-tip-modal-body">
+      <span class="health-tip-close-btn">&times;</span>
+      <h2><b>HEALTH TIPS</b></h2>
+      <div class="health-tip-modal-content">
+        <span>1. DRINK AT LEAST 2 LITRES OF WATER DAILY</span><br />
+        <span>2. GET AT LEAST 7 HOURS OF SLEEP EACH NIGHT</span><br />
+        <span>3. EAT FRUITS AND VEGETABLES IN EACH MEAL</span><br />
+        <span>4. LIMIT SCREEN TIME</span><br />
+        <span>5. PROTECT YOUR MENTAL HEALTH</span><br />
+        <span>6. STRETCH OR DO LIGHT WORKOUTS FOR 30<br />MINUTES DAILY</span
+        ><br />
+        <span>7. PRACTICE PERSONAL HYGIENE ALWAYS</span><br />
+        <span>8. DON'T IGNORE MINOR SYMPTOMS. VISIT<br />THE CLINIC EARLY</span
+        ><br />
+        <span>9. GO FOR REGULAR CHECKUPS</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // Emergency Modal
+  const emergencyModal = document.getElementById("emergencyModal");
+  const emergencyBtn = document.getElementById("emergency-btn");
+  const emergencyCloseBtn = emergencyModal.querySelector(
+    ".emergency-close-btn"
+  );
+
+  emergencyBtn.onclick = function () {
+    emergencyModal.style.display = "flex";
+  };
+
+  emergencyCloseBtn.onclick = function () {
+    emergencyModal.style.display = "none";
+  };
+
+  // Appointment Modal
+  const appointmentModal = document.getElementById("appointmentModal");
+  const appointmentBtn = document.querySelector(".book-appointment-btn");
+  const appointmentCloseBtn = appointmentModal.querySelector(
+    ".appointment-close-btn"
+  );
+
+  appointmentBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    appointmentModal.style.display = "block";
+  });
+
+  appointmentCloseBtn.addEventListener("click", function () {
+    appointmentModal.style.display = "none";
+  });
+
+  // Health Tip Modal
+  const HealthTipModal = document.getElementById("health-tip-modal");
+  const HealthTipBtn = document.getElementById("health-tip-btn");
+  const HealthTipCloseBtn = HealthTipModal.querySelector(
+    ".health-tip-close-btn"
+  );
+
+  HealthTipBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    HealthTipModal.style.display = "block";
+  });
+
+  HealthTipCloseBtn.addEventListener("click", function () {
+    HealthTipModal.style.display = "none";
+  });
+
+  // Close modals if clicked outside
+  window.addEventListener("click", function (e) {
+    if (e.target === emergencyModal) {
+      emergencyModal.style.display = "none";
+    }
+    if (e.target === appointmentModal) {
+      appointmentModal.style.display = "none";
+    }
+    if (e.target === HealthTipModal) {
+      HealthTipModal.style.display = "none";
+    }
+  });
+</script>
+
+{% endblock %}
