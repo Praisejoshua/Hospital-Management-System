@@ -1,19 +1,34 @@
-{% extends "management_system/base.html" %}
-{% block content %}
+{% extends "management_system/base.html" %} {% load static %} {% block content %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'management_system/medical-report.css' %}"
+/>
 <div class="medical-report">
-    <h2>MEDICAL REPORT</h2>
-    <div class="medical-report-header-content">
-        <h4><b>DATE:</b></h4><span>19 MAY, 2025</span>
-        <h4><b>NAME:</b></h4><span>ADRIAN EGBUNA</span>
-        <h4><b>MATRIC:</b></h4><span>VUG/SEN/22/7471</span>
+  <h2>MEDICAL REPORT</h2>
+  <div class="medical-report-header-content">
+    <div>
+      <span><b>DATE:</b></span>
+      <span>19 MAY, 2025</span>
     </div>
-    <div class="medical-report-content">
-        <span>This is to confirm that the above patient, <b>Adrian Egbuna,</b><br>
-        visited the institution's clinic on <b>19 May, 2025.</b> During the visit, the <br>
-        patient underwent treatment for <b>Malaria</b> and was administered <br>
-        <b>Coartem.</b><br><br>
-        Issued by the Institution's Medical Center.
-        </span>
+    <div>
+      <span><b>NAME:</b></span>
+      <span>ADRIAN EGBUNA</span>
     </div>
+    <div>
+      <span><b>MATRIC:</b></span>
+      <span>VUG/SEN/22/7471</span>
+    </div>
+  </div>
+  <div class="medical-report-content">
+    <span
+      >This is to confirm that the above patient, <b>Adrian Egbuna,</b><br />
+      visited the institution's clinic on <b>19 May, 2025.</b> During the visit,
+      the <br />
+      patient underwent treatment for <b>Malaria</b> and was administered <br />
+      <b>Coartem.</b><br /><br />
+      Issued by the Institution's Medical Center.
+    </span>
+  </div>
 </div>
 {% endblock %}

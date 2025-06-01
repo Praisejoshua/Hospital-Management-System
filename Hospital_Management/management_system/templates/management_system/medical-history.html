@@ -1,9 +1,16 @@
 {% extends "management_system/base.html" %}
+{% load static %}
 {% block content %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'management_system/medical-history.css' %}"
+    />
     <div class="history-page-wrapper">
         <h2 class="history-page-title">Medical History</h2>
             <table class="medical-history-table">
                 <thead>
+                    {% if appointments %}
                     <tr>
                         <th class="medical-history-table-header">Visit Date</th>
                         <th class="medical-history-table-header">Diagnosis</th>
@@ -14,23 +21,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for appointment in appointments %}
                     <tr class="medical-history-row">
                         <td class="medical-history-table-content">19 May 2025</td>
                         <td class="medical-history-table-content">Malaria</td>
                         <td class="medical-history-table-content">Coartem</td>
                         <td class="medical-history-table-content">Stable, Rested</td>
-                        <td class="medical-history-table-content">Dr. A. Yusuf</td>
+                        <td class="medical-history-table-content">{{ appointment.doctor_selected }}</td>
                         <td class="medical-history-table-content">View Report</td>
                     </tr>
-                    <tr class="medical-history-row">
-                        <td class="medical-history-table-content">15 Feb 2025</td>
-                        <td class="medical-history-table-content">Asthma Attack</td>
-                        <td class="medical-history-table-content">Ventolin</td>
-                        <td class="medical-history-table-content">Admitted 2 days</td>
-                        <td class="medical-history-table-content">Dr. L. Eze</td>
-                        <td class="medical-history-table-content">View Report</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
+                {% endif %}
             </table>
     </div>
 {% endblock %}

@@ -52,6 +52,11 @@
               ><i class="fa-solid fa-clipboard"></i><span> Appointments</span></a
             >
           </li>
+          <li>
+            <a href="{% url 'patient-records' %}"
+              ><i class="fa-solid fa-history"></i><span> Patient Records</span></a
+            >
+          </li>
           <li class="auth-btns">
             <form action="{% url 'logout' %}" method="post">
               {% csrf_token %}

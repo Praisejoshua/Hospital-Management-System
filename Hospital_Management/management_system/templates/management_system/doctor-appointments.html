@@ -1,9 +1,14 @@
-{% extends "management_system/base.html" %} {% block content %}
+{% extends "management_system/base.html" %} {% load static %} {% block content %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'management_system/doctor-appointments.css' %}"
+    />
 <div class="doctor-appointments-body">
-  <h1><b>Appointment Manager</b></h1>
+  <h1>Appointment Manager</h1>
   <div class="doctor-appointments-body-content">
-    <h3><b>Incoming Appointments</b></h3>
-    <table>
+    <h3>Incoming Appointment Requests</h3>
+    <table class="doctor-appointments-table">
       {% if appointments %}
       <thead>
         <tr>
@@ -37,6 +42,18 @@
                 {% csrf_token %}
                 <button type="submit" class="reject-btn">Reject</button>
               </form>
+              <button
+                type="submit"
+                id="appointment-details-btn"
+                class="appointment-details-btn"
+                data-name="{{ appointment.patient_name }}"
+                data-id="{{ appointment.id }}"
+                data-matric="{{ appointment.patient_matric }}"
+                data-date="{{ appointment.appointment_date }}"
+                data-purpose="{{ appointment.patient_purpose }}"
+              >
+                View
+              </button>
             </div>
           </td>
         </tr>
@@ -46,15 +63,17 @@
       {% endif %}
     </table>
   </div>
-  <hr>
+  <hr />
   <div class="doctor-appointments-body-content">
-    <h3><b>Accepted Appointments</b></h3>
-    <table>
+    <h3>Approved Appointments</h3>
+    <table class="doctor-appointments-table">
       {% if accepted_appointments %}
       <thead>
         <tr>
           <th class="appointments-table-header">Patient</th>
+          <th class="appointments-table-header">ID</th>
           <th class="appointments-table-header">Date</th>
+          <th class="appointments-table-header">Time</th>
           <th class="appointments-table-header">Status</th>
           <th class="appointments-table-header">Action</th>
         </tr>
@@ -63,15 +82,16 @@
         {% for accepted in accepted_appointments %}
         <tr class="doctor-appointments-row">
           <td class="appointments-content">{{ accepted.patient_name }}</td>
-          <td class="appointments-content">
-            {{ accepted.appointment_date }}
-          </td>
+          <td class="appointments-content">{{ accepted.id }}</td>
+          <td class="appointments-content">{{ accepted.appointment_date }}</td>
+          <td class="appointments-content">TBD</td>
           <td class="appointments-content">{{ accepted.status }}</td>
           <td class="appointments-content">
             <div class="appointment-button-group">
               <form
                 method="post"
-                action="{% url 'handle_appointment' accepted.id accepted.id %}?action=complete">
+                action="{% url 'handle_appointment' accepted.id accepted.id %}?action=complete"
+              >
                 {% csrf_token %}
                 <button type="submit" class="end-btn">End</button>
               </form>
@@ -84,5 +104,65 @@
       {% endif %}
     </table>
   </div>
+  <div id="appointment-details-modal" class="modal">
+    <div class="appointment-details-modal-body">
+      <span class="appointment-details-close-btn">&times;</span>
+      <h3><b>Appointment Details</b></h3>
+      <div class="appointment-details-modal-content">
+        <span><b>Patient Name</b></span>
+        <span id="modal-name"></span><br />
+        <span><b>Appointment ID</b></span>
+        <span id="modal-id"></span>
+        <hr />
+        <span><b>Matric</b></span>
+        <span id="modal-matric"></span><br />
+        <span><b>Date</b></span>
+        <span id="modal-date"></span><br />
+        <span><b>Reason</b></span>
+        <span id="modal-purpose"></span>
+        <div class="appointment-button-group">
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<script>
+  const AppointmentDetailsModal = document.getElementById(
+    "appointment-details-modal"
+  );
+  const AppointmentDetailsBtn = document.getElementById(
+    "appointment-details-btn"
+  );
+  const AppointmentDetailsCloseBtn = AppointmentDetailsModal.querySelector(
+    ".appointment-details-close-btn"
+  );
+
+  document.querySelectorAll(".appointment-details-btn").forEach((btn) => {
+    btn.addEventListener("click", function (event) {
+      event.preventDefault();
+      document.getElementById("modal-name").innerText = this.dataset.name;
+      document.getElementById("modal-id").innerText = this.dataset.id;
+      document.getElementById("modal-matric").innerText = this.dataset.matric;
+      document.getElementById("modal-date").innerText = this.dataset.date;
+      document.getElementById("modal-purpose").innerText = this.dataset.purpose;
+
+      modal.style.display = "block";
+    });
+  });
+
+  AppointmentDetailsBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    AppointmentDetailsModal.style.display = "block";
+  });
+
+  AppointmentDetailsCloseBtn.addEventListener("click", function () {
+    AppointmentDetailsModal.style.display = "none";
+  });
+
+  window.addEventListener("click", function (e) {
+    if (e.target === AppointmentDetailsModal) {
+      AppointmentDetailsModal.style.display = "none";
+    }
+  });
+</script>
 {% endblock %}

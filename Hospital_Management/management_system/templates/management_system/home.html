@@ -1,5 +1,11 @@
 {% extends "management_system/base.html" %}
+{% load static %}
 {% block content %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'management_system/homepage.css' %}"
+    />
 <div class="homepage">
     <h1>HOSPITAL MANAGEMENT SYSTEM</h1>
     <div class="homepage-body-left">

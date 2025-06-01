@@ -1,4 +1,9 @@
-{% extends "management_system/base.html" %} {% block content %}
+{% extends "management_system/base.html" %} {% load static %} {% block content %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'management_system/dashboard.css' %}"
+/>
 <div class="dashboard-container">
   <h1>WELCOME BACK, {{ user.username }}</h1>
   <div class="dashboard-top-content">
@@ -16,13 +21,15 @@
         Prescriptions</span
       >
     </div>
-    <div class="dashboard-top-content-box">
-      <h3>17-04-2025</h3>
-      <span
-        >Last<br />
-        Clinic Visit</span
-      >
-    </div>
+    <a href="{% url 'patient-notifications' %}" class="notifications-link">
+      <div class="dashboard-top-content-box">
+        <i class="fa-solid fa-bell"></i>
+        <h3>Notifications</h3>
+        <span
+          >2 New Messages</span
+        >
+      </div>
+    </a>
     <div class="dashboard-top-content-box">
       <h3>Report</h3>
       <span
@@ -48,7 +55,7 @@
         </div>
       </div>
       <div class="patient-dashboard-history">
-        <table>
+        <table class="doctor-appointments-table">
           <h3><b>Upcoming Appointments</b></h3>
           {% if appointments %}
           <thead>
@@ -67,8 +74,7 @@
               <td class="history-content">{{ appointment.patient_purpose }}</td>
               <td class="history-content">{{ appointment.status }}</td>
             </tr>
-            {% endfor %}
-            {% else %}
+            {% endfor %} {% else %}
             <p>No appointments found</p>
           </tbody>
           {% endif %}
@@ -78,33 +84,58 @@
     </div>
     <div class="patient-dashboard-middle-content-right">
       <button type="submit" id="health-tip-btn">
-        <div class="patient-dashboard-right-content health-tip">
-          <h2>Health Tips</h2>
-          <span>Simple tips to keep you healthier</span>
+        <div class="patient-dashboard-right-content side-btn">
+          <div class="side-btn-icon">
+            <i class="fa-solid fa-apple-whole"></i>
+          </div>
+          <div class="side-btn-text">
+            <h2>Health Tips</h2>
+            <span>Simple tips to keep you healthier</span>
+          </div>
         </div>
       </button>
       <a href="{% url 'ai-assistant' %}">
-        <div class="patient-dashboard-right-content ai">
-          <h2>A.I.</h2>
-          <span>Your Intelligent Health Assistant</span>
+        <div class="patient-dashboard-right-content side-btn">
+          <div class="side-btn-icon">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div class="side-btn-text">
+            <h2>A.I.</h2>
+            <span>Your Intelligent Health Assistant</span>
+          </div>
         </div>
       </a>
       <a href="{% url 'insights' %}">
-        <div class="patient-dashboard-right-content insights">
-          <h2>Insights</h2>
-          <span>Overview and Trends</span>
+        <div class="patient-dashboard-right-content side-btn">
+          <div class="side-btn-icon">
+            <i class="fa-solid fa-chart-simple"></i>
+          </div>
+          <div class="side-btn-text">
+            <h2>Insights</h2>
+            <span>Overview and Trends</span>
+          </div>
         </div>
       </a>
       <a href="{% url 'patient-profile' %}">
-        <div class="patient-dashboard-right-content profile">
-          <h2>Profile</h2>
-          <span>Manage your Personal Info</span>
+        <div class="patient-dashboard-right-content side-btn">
+          <div class="side-btn-icon">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="side-btn-text">
+            <h2>Profile</h2>
+            <span>Manage your Personal Info</span>
+          </div>
         </div>
       </a>
       <button type="submit" id="emergency-btn">
-        <div class="patient-dashboard-right-content emergency">
-          <h2>Emergency Contacts</h2>
-          <span>Essential info for Urgent Support</span>
+        <div class="patient-dashboard-right-content side-btn">
+          <div class="side-btn-icon">
+            <i class="fa-solid fa-truck-medical"></i>
+          </div>
+          <div class="side-btn-text">
+            <h2>Emergency Contacts</h2>
+            <span>Essential info for Urgent Support</span>
+          </div>
         </div>
       </button>
     </div>
@@ -177,7 +208,7 @@
 
   // Appointment Modal
   const appointmentModal = document.getElementById("appointmentModal");
-  const appointmentBtn = document.querySelector(".book-appointment-btn");
+  const appointmentBtn = document.querySelector(".appointment-btn");
   const appointmentCloseBtn = appointmentModal.querySelector(
     ".appointment-close-btn"
   );
