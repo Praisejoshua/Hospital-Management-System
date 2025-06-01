@@ -1,0 +1,39 @@
+/* Insights Page */
+.insights-page {
+  max-width: 900px;
+  margin: auto;
+}
+
+.insights-page h2 {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.insights-body {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.insights-body-content {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+  text-align: left;
+  height: 200px;
+  transition: transform 0.2s ease;
+}
+
+.insights-body-content:hover {
+  transform: translateY(-5px);
+}
+
+.insights-body-content h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #0f172a;
+}
