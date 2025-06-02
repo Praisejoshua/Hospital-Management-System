@@ -91,9 +91,8 @@ def doctor_profile(request):
         request.user.phone = request.POST.get('phone')
 
         request.user.save()
-
+        
         messages.success(request, "Profile updated successfully!")
         return redirect('doctor-profile')
 
     return render(request, 'users/doctor-profile.html')
-

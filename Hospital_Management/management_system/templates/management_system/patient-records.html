@@ -1,7 +1,12 @@
-{% extends "management_system/base.html" %} {% block content %}
+{% extends "management_system/base.html" %} {% load static %} {% block content %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'management_system/patient-records.css' %}"
+/>
 <div class="patient-records-body">
   <h1>Patient Records</h1>
-  <div class="doctor-appointments-body-content">
+  <div class="patient-records-body-content">
     <table class="patient-records-table">
       {% if appointments %}
       <thead>
@@ -21,7 +26,7 @@
           <td class="appointments-content">{{ appointment.doctor_selected }}</td>
           <td class="appointments-content">{{ appointment.status }}</td>
           <td class="appointments-content">
-                <button type="submit" class="end-btn">View</button>
+                <button type="submit" class="view-btn">View</button>
           </td>
         </tr>
         {% endfor %} {% else %}

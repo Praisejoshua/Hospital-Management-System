@@ -9,6 +9,9 @@
 body {
   background-color: #f7f9fc;
   color: #333;
+  background-image: url("../management_system/images/hospital-image.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
 a {
@@ -28,7 +31,7 @@ ul {
 /* sidebar */
 .sidebar {
   width: 60px;
-  background-color:  #0f172a;
+  background-color: #0f172a;
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -174,7 +177,7 @@ ul {
 }
 
 .footer a:hover {
-  color: #00bcd4;
+  text-decoration: underline;
 }
 
 .footer-section-links li {
@@ -388,15 +391,57 @@ ul {
 }
 
 /* Responsive */
-@media (max-width: 600px) {
-  .appointments-table-header,
-  .appointments-content {
-    font-size: 14px;
-    padding: 10px;
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
   }
 
-  .appointments-content a {
-    font-size: 12px;
-    padding: 4px 8px;
+  .footer-section-about,
+  .footer-section-links,
+  .footer-section-contact {
+    width: 100%;
+  }
+
+  .footer-section-links ul {
+    padding-left: 0;
+  }
+
+  .footer-section-links ul li {
+    list-style: none;
+  }
+
+  .footer h2 {
+    font-size: 18px;
+  }
+
+  .footer p,
+  .footer a,
+  .footer li {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 40px 10px 15px 10px;
+  }
+
+  .footer h2 {
+    font-size: 16px;
+  }
+
+  .footer-bottom {
+    font-size: 13px;
+  }
+
+  .footer-section-contact p {
+    font-size: 13px;
+  }
+
+  .footer-section-contact box-icon {
+    width: 16px;
+    height: 16px;
   }
 }

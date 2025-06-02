@@ -358,3 +358,66 @@ table h3 {
 .side-btn-text {
   width: 85%;
 }
+
+@media (max-width: 1024px) {
+  .doctor-dashboard-middle-content,
+  .patient-dashboard-middle-content {
+    flex-direction: column;
+  }
+
+  .doctor-dashboard-schedule,
+  .doctor-dashboard-appointments {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-top-content {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .doctor-dashboard-bottom-content {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .appointment-btn {
+    width: 100%;
+  }
+
+  .calendar-weekdays,
+  .calendar-grid {
+    font-size: 0.8rem;
+  }
+
+  .calendar-day {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container h1 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .dashboard-top-content-box {
+    padding: 0.7rem;
+    font-size: 0.9rem;
+  }
+
+  .doctor-table,
+  .patient-appointments-table {
+    width: 100%;
+    font-size: 0.85rem;
+  }
+
+  table th,
+  table td {
+    padding: 8px;
+  }
+
+  .doctor-dashboard-bottom-content-box span {
+    font-size: 1rem;
+  }
+}
