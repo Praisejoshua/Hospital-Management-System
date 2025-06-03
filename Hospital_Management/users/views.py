@@ -72,6 +72,7 @@ def patient_profile(request):
 
         messages.success(request, "Profile updated successfully!")
         return redirect('patient-profile')
+
     return render(request, 'users/patient-profile.html')
 
 @login_required
@@ -79,6 +80,7 @@ def doctor_profile(request):
     if request.user.role != 'doctor':
         return redirect('not_authorized')
 
+    # Handle profile info update
     if request.method == 'POST':
         request.user.first_name = request.POST.get('first_name')
         request.user.last_name = request.POST.get('last_name')
@@ -89,10 +91,12 @@ def doctor_profile(request):
         request.user.blood_group = request.POST.get('blood_group')
         request.user.marital_status = request.POST.get('marital_status')
         request.user.phone = request.POST.get('phone')
-
         request.user.save()
-        
+
         messages.success(request, "Profile updated successfully!")
         return redirect('doctor-profile')
 
     return render(request, 'users/doctor-profile.html')
+
+
+

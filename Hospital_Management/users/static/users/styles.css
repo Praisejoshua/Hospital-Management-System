@@ -34,10 +34,16 @@ ul {
 }
 
 #message-container {
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  padding: 1rem;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
   font-weight: 500;
+  font-size: 15px;
+  color: #fff;
+  background: #0f172a;
 }
 
 /* Footer */
@@ -216,10 +222,10 @@ legend {
     width: 100%;
     padding: 1.5rem;
   }
-    .register-flex {
+  .register-flex {
     flex-direction: column;
   }
-  
+
   .register-section-left,
   .register-section-right {
     width: 100%;

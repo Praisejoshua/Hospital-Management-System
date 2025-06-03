@@ -356,6 +356,11 @@ table h3 {
   border-radius: 12px;
 }
 
+.inventory-manager-btn,
+.approve-medical-report-btn {
+  text-decoration: none;
+}
+
 @media (max-width: 1024px) {
   .doctor-dashboard-middle-content,
   .patient-dashboard-middle-content {

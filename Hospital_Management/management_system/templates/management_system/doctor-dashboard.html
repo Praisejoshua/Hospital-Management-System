@@ -93,11 +93,16 @@
       <i class="fa-solid fa-magnifying-glass"></i>
       <span>Find a<br />Patient</span><br />
     </div>
-    <div class="doctor-dashboard-bottom-content-box">
-      <i class="fa-solid fa-notes-medical"></i>
-      <span>Generate<br />Medical Report</span><br />
-    </div>
-    <a href="{% url 'doctor-inventory-manager' %}" class="inventory-manager-btn">
+    <a href="{% url 'approve-medical-report' %}" class="approve-medical-report-btn">
+      <div class="doctor-dashboard-bottom-content-box">
+        <i class="fa-solid fa-notes-medical"></i>
+        <span>Approve<br />Medical Report</span><br />
+      </div>
+    </a>
+    <a
+      href="{% url 'doctor-inventory-manager' %}"
+      class="inventory-manager-btn"
+    >
       <div class="doctor-dashboard-bottom-content-box">
         <i class="fa-solid fa-warehouse"></i>
         <span>Inventory<br />Check</span><br />

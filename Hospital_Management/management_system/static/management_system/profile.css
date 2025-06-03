@@ -171,3 +171,42 @@
   border-radius: 0.5rem;
   cursor: pointer;
 }
+
+.profile-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+  display: block;
+  margin: 0 auto;
+}
+
+.profile-upload-container {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 25px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ccc;
+  margin-bottom: 15px;
+}
+
+.profile-upload-container input[type="file"] {
+  display: block;
+  margin: 10px auto 20px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: white;
+  width: 100%;
+}

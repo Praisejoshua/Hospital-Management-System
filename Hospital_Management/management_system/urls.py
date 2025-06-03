@@ -3,7 +3,7 @@ from . import views
 from .views import (PatientView, MedicalHistoryView, MedicalReportView, 
                     AiAssistantView, InsightsView, DoctorView, HomeView,
                     DoctorAppointmentsView, PatientRecordsView, DoctorNotificationsView,
-                    PatientNotificationsView, DoctorInventoryView)
+                    PatientNotificationsView, DoctorInventoryView, ApproveMedicalReportView)
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home-page'),
@@ -18,6 +18,7 @@ urlpatterns = [
     path('insights/', InsightsView.as_view(), name='insights'),
     path('patient-records/', PatientRecordsView.as_view(), name='patient-records'),
     path('doctor-inventory-manager/', DoctorInventoryView.as_view(), name='doctor-inventory-manager'),
+    path('approve-medical-report/', ApproveMedicalReportView.as_view(), name='approve-medical-report'),
     path('not_authorized/', views.not_authorized, name='not_authorized'),
     path('handle-appointment/<int:appointment_id>/<int:accepted_id>/', views.handle_appointment, name='handle_appointment'),
     path('patient-delete-notification/<int:notification_id>/', views.patient_delete_notification, name='patient_delete_notification'),

@@ -8,6 +8,12 @@ class CustomUser(AbstractUser):
         ('patient', 'Patient'),
     ]
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='patient')
+    profile_picture = models.ImageField(
+        upload_to='profile_pics/',
+        default='profile_pics/default_pic.jpg',
+        blank=True,
+        null=True
+    )
     first_name = models.CharField(max_length=30, blank=True, null=True)
     middle_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=30, blank=True, null=True)

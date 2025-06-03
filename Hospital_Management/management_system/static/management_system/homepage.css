@@ -80,11 +80,6 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.homepage-bottom-content:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.1);
-}
-
 .homepage-bottom-content i {
   font-size: 2rem;
   color: #0f172a;

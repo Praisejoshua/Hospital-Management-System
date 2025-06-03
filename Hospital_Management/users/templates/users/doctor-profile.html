@@ -9,6 +9,15 @@
 <div class="patient-profile">
     <div class="patient-profile-left">
         <h2>PROFILE</h2>
+            <div class="profile-upload-container">
+        {% if request.user.profile_picture %}
+        <img
+          src="{{ request.user.profile_picture.url }}"
+          class="profile-image"
+          alt="Profile Picture"
+        />
+        {% endif %}
+    </div>
     </div>
     <div class="patient-profile-right">
         <h2>PERSONAL INFORMATION</h2>

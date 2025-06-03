@@ -27,7 +27,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>HMS</title>
+    <title>MedLink</title>
   </head>
   <body class="d-flex flex-column min-vh-100">
     <div class="wrapper">
@@ -39,7 +39,7 @@
           {% if user.role == 'doctor' %}
           <li>
             <a href="{% url 'doctor-dashboard' %}"
-              ><i class="fa-solid fa-house"></i> <span> Home</span></a
+              ><i class="fa-solid fa-house"></i> <span> Dashboard</span></a
             >
           </li>
           <li>
@@ -49,12 +49,14 @@
           </li>
           <li>
             <a href="{% url 'doctor-appointments' %}"
-              ><i class="fa-solid fa-clipboard"></i><span> Appointments</span></a
+              ><i class="fa-solid fa-clipboard"></i
+              ><span> Appointments</span></a
             >
           </li>
           <li>
             <a href="{% url 'patient-records' %}"
-              ><i class="fa-solid fa-history"></i><span> Patient Records</span></a
+              ><i class="fa-solid fa-history"></i
+              ><span> Patient Records</span></a
             >
           </li>
           <li class="auth-btns">
@@ -69,7 +71,7 @@
           {% elif user.role == 'patient' %}
           <li>
             <a href="{% url 'patient-dashboard' %}"
-              ><i class="fa-solid fa-house"></i><span> Home</span></a
+              ><i class="fa-solid fa-house"></i><span> Dashboard</span></a
             >
           </li>
           <li>
@@ -78,20 +80,20 @@
             >
           </li>
           <li>
-            <a href="#"
-              ><i class="fa-solid fa-magnifying-glass"></i
-              ><span> Search</span></a
-            >
-          </li>
-          <li>
             <a href="{% url 'medical-report' %}"
-              ><i class="fa-solid fa-notes-medical"></i><span> Report</span></a
+              ><i class="fa-solid fa-notes-medical"></i
+              ><span> Medical Report</span></a
             >
           </li>
           <li>
             <a href="#"
               ><i class="fa-solid fa-house-medical"></i
               ><span> Health Visit</span></a
+            >
+          </li>
+          <li>
+            <a href="{% url 'ai-assistant' %}"
+              ><i class="fa-solid fa-robot"></i><span> Ai Assistant</span></a
             >
           </li>
           <li>

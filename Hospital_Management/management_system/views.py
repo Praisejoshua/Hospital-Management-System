@@ -242,3 +242,7 @@ def doctor_delete_notification(request, notification_id):
 class DoctorInventoryView(RoleRequiredMixin, TemplateView):
     template_name = 'management_system/inventory-manager.html'
     allowed_roles = ['doctor']
+
+class ApproveMedicalReportView(RoleRequiredMixin, TemplateView):
+    template_name = 'management_system/approve-medical-report.html'
+    allowed_roles = ['doctor']
