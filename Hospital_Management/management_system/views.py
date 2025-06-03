@@ -20,7 +20,6 @@ class HomeView(TemplateView):
     template_name = 'management_system/home.html'
 
 class PatientView(RoleRequiredMixin, TemplateView):
-
     template_name = 'management_system/patient-dashboard.html'
     allowed_roles = ['patient']
 
@@ -41,15 +40,25 @@ class PatientView(RoleRequiredMixin, TemplateView):
             patient_purpose = form.cleaned_data['patient_purpose']
             doctor_selected = form.cleaned_data['doctor_selected']
 
-            Appointments.objects.create(user=request.user,
-                                        patient_name=patient_name,
-                                        patient_matric=patient_matric,
-                                        patient_purpose=patient_purpose,
-                                        doctor_selected=doctor_selected)
-            messages.success(request, "Appointment Booked Successfully!")
+            appointment = Appointments.objects.create(
+                user=request.user,
+                patient_name=patient_name,
+                patient_matric=patient_matric,
+                patient_purpose=patient_purpose,
+                doctor_selected=doctor_selected
+            )
+
+            Notification.objects.create(
+                user=doctor_selected,
+                message="You have received a new appointment!",
+                appointment=appointment
+            )
+
+            messages.success(request, "Appointment booked successfully.")
             return self.render_to_response(self.get_context_data(success=True))
-        else:
-            return self.render_to_response(self.get_context_data(form=form))
+
+        return self.render_to_response(self.get_context_data(form=form))
+
 
 class MedicalHistoryView(RoleRequiredMixin, TemplateView):
     template_name = 'management_system/medical-history.html'
@@ -82,9 +91,11 @@ class PatientNotificationsView(RoleRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['notifications'] = Notification.objects.filter(
-            user=self.request.user,
+            user=self.request.user
         ).order_by('-date_created')
         return context
+
+
 
 
 
@@ -165,6 +176,35 @@ class DoctorView(RoleRequiredMixin, TemplateView):
         ).order_by('-appointment_date')[:5]
         return context
     
+
+    def post(self, request):
+        appointment_id = request.POST.get('appointment_id')
+        diagnosis = request.POST.get('diagnosis')
+        prescription = request.POST.get('prescription')
+        doctor_notes = request.POST.get('doctor_notes')
+        doctor_result = request.POST.get('doctor_result')
+
+        try:
+            appointment = Appointments.objects.get(id=appointment_id, doctor_selected=request.user, status='accepted')
+        except Appointments.DoesNotExist:
+            messages.error(request, "Appointment not found or access denied.")
+            return redirect(request.path)
+
+        appointment.diagnosis = diagnosis
+        appointment.prescription = prescription
+        appointment.doctor_notes = doctor_notes
+        appointment.doctor_result = doctor_result
+        appointment.save()
+
+        Notification.objects.create(
+            user=appointment.user,
+            message="The Doctor has given a diagnosis for your appointment.",
+            appointment=appointment
+            )
+
+        messages.success(request, "Diagnosis successfully added.")
+        return redirect('doctor-dashboard')
+    
 class PatientRecordsView(RoleRequiredMixin, TemplateView):
     template_name = 'management_system/patient-records.html'
     allowed_roles = ['doctor']
@@ -198,3 +238,7 @@ def doctor_delete_notification(request, notification_id):
     notification = get_object_or_404(Notification, id=notification_id, user=request.user)
     notification.delete()
     return redirect('doctorsnotifications')
+
+class DoctorInventoryView(RoleRequiredMixin, TemplateView):
+    template_name = 'management_system/inventory-manager.html'
+    allowed_roles = ['doctor']

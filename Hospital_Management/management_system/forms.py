@@ -21,6 +21,3 @@ class AppointmentForm(forms.Form):
             'style': 'width: 100%; padding: 8px; border-radius: 6px;'
             })
     )
-
-
-

@@ -97,32 +97,47 @@
       <i class="fa-solid fa-notes-medical"></i>
       <span>Generate<br />Medical Report</span><br />
     </div>
-    <div class="doctor-dashboard-bottom-content-box">
-      <i class="fa-solid fa-warehouse"></i>
-      <span>Inventory<br />Check</span><br />
-    </div>
+    <a href="{% url 'doctor-inventory-manager' %}" class="inventory-manager-btn">
+      <div class="doctor-dashboard-bottom-content-box">
+        <i class="fa-solid fa-warehouse"></i>
+        <span>Inventory<br />Check</span><br />
+      </div>
+    </a>
   </div>
   <div id="diagnosis-modal" class="modal">
     <div class="diagnosis-modal-body">
       <span class="diagnosis-close-btn">&times;</span>
       <h3><b>Add New Diagnosis</b></h3>
       <div class="diagnosis-modal-content">
-        <label for="appointment_id">Appointment ID</label>
-        <input type="number" name="appointment_id" placeholder="No." />
-        <label for="diagnosis">Diagnosis</label>
-        <input type="text" name="diagnosis" max="20" />
-        <label for="doctor_notes">Prescription</label>
-        <input type="text" name="prescription" max="50" />
-        <label for="doctor_notes">Notes</label>
-        <textarea
-          name="doctor_notes"
-          id="doctor_notes"
-          placeholder="Write your notes here..."
-          maxlength="50"
-        ></textarea>
-        <label for="doctor_result">Result</label>
-        <input type="text" name="doctor_result" placeholder="Result" max="30" />
-        <button type="submit" class="diagnosis-submit-btn">Add</button>
+        <form method="post">
+          {% csrf_token %}
+          <label for="appointment_id">Appointment ID</label>
+          <select id="appointment_id" name="appointment_id" required>
+            <option value="" disabled selected>Select an Appointment</option>
+            {% for appointment in appointments %}
+            <option value="{{ appointment.id }}">{{ appointment.id }}</option>
+            {% endfor %}
+          </select>
+          <label for="diagnosis">Diagnosis</label>
+          <input type="text" name="diagnosis" max="20" />
+          <label for="doctor_notes">Prescription</label>
+          <input type="text" name="prescription" max="50" />
+          <label for="doctor_notes">Notes</label>
+          <textarea
+            name="doctor_notes"
+            id="doctor_notes"
+            placeholder="Write your notes here..."
+            maxlength="50"
+          ></textarea>
+          <label for="doctor_result">Result</label>
+          <input
+            type="text"
+            name="doctor_result"
+            placeholder="Result"
+            max="30"
+          />
+          <button type="submit" class="diagnosis-submit-btn">Add</button>
+        </form>
       </div>
     </div>
   </div>

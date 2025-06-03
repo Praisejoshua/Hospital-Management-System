@@ -149,9 +149,6 @@
         {% csrf_token %} {{ form.as_p }}
         <button type="submit">Submit</button>
       </form>
-      {% if success %}
-      <p>Form submitted successfully!</p>
-      {% endif %}
     </div>
   </div>
   <div id="emergencyModal" class="modal">

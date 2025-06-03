@@ -12,8 +12,7 @@
     <li class="notif-item">
       <div class="notif-content">
         {{ notification.message }}<br />
-        {% if notification.appointment %} Appointment ID: {{
-        notification.appointment.id }} {% endif %}
+        {% if notification.appointment %} Appointment ID: {{ notification.appointment.id }} {% endif %}
         <span class="notif-date"
           >{{ notification.date_created|date:"M d, Y H:i" }}</span
         >

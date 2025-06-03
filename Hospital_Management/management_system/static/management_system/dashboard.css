@@ -185,14 +185,6 @@ table td {
   vertical-align: top;
 }
 
-table td:last-child {
-  font-weight: bold;
-}
-
-table td:last-child::before {
-  font-size: 12px;
-}
-
 table h3 {
   color: #0f172a;
 }
@@ -314,7 +306,7 @@ table h3 {
 
 #diagnosis-btn {
   border: none;
-  background-color: white;
+  background-color: transparent;
 }
 
 .doctor-dashboard-bottom-content-box {
@@ -357,6 +349,11 @@ table h3 {
 
 .side-btn-text {
   width: 85%;
+}
+
+#emergency-btn,
+#health-tip-btn {
+  border-radius: 12px;
 }
 
 @media (max-width: 1024px) {

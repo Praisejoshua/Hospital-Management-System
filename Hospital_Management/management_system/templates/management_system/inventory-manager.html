@@ -1,0 +1,30 @@
+{% extends "management_system/base.html" %}
+{% load static %}
+{% block content %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'management_system/inventory-manager.css' %}"
+    />
+    <div class="history-page-wrapper">
+        <h2 class="history-page-title">Inventory</h2>
+            <table class="medical-history-table">
+                <thead>
+                    <tr>
+                        <th class="medical-history-table-header">Name</th>
+                        <th class="medical-history-table-header">Stock</th>
+                        <th class="medical-history-table-header">Category</th>
+                        <th class="medical-history-table-header">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="medical-history-row">
+                        <td class="medical-history-table-content">Paracetamol</td>
+                        <td class="medical-history-table-content">120 tablets</td>
+                        <td class="medical-history-table-content">Antiboitic</td>
+                        <td class="medical-history-table-content">In Stock</td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+{% endblock %}

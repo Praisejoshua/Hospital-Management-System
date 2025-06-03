@@ -12,23 +12,25 @@
                 <thead>
                     {% if appointments %}
                     <tr>
+                        <th class="medical-history-table-header">ID</th>
                         <th class="medical-history-table-header">Visit Date</th>
                         <th class="medical-history-table-header">Diagnosis</th>
                         <th class="medical-history-table-header">Prescription</th>
                         <th class="medical-history-table-header">Doctor's Note</th>
                         <th class="medical-history-table-header">Doctor</th>
-                        <th class="medical-history-table-header">Action</th>
+                        <th class="medical-history-table-header">Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for appointment in appointments %}
                     <tr class="medical-history-row">
-                        <td class="medical-history-table-content">19 May 2025</td>
-                        <td class="medical-history-table-content">Malaria</td>
-                        <td class="medical-history-table-content">Coartem</td>
-                        <td class="medical-history-table-content">Stable, Rested</td>
+                        <td class="medical-history-table-content">{{ appointment.id }}</td>
+                        <td class="medical-history-table-content">{{ appointment.appointment_date }}</td>
+                        <td class="medical-history-table-content">{{ appointment.diagnosis }}</td>
+                        <td class="medical-history-table-content">{{ appointment.prescription }}</td>
+                        <td class="medical-history-table-content">{{ appointment.doctor_notes }}</td>
                         <td class="medical-history-table-content">{{ appointment.doctor_selected }}</td>
-                        <td class="medical-history-table-content">View Report</td>
+                        <td class="medical-history-table-content">{{ appointment.status }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
