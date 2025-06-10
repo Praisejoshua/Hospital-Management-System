@@ -1,0 +1,102 @@
+.homepage {
+  padding: 2rem;
+  text-align: left;
+}
+
+.homepage h1 {
+  font-size: 1.5rem;
+  color: #0f172a;
+  margin-bottom: 2rem;
+}
+
+.homepage-body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.homepage-body-left {
+  flex: 1 1 300px;
+  max-width: 500px;
+  text-align: left;
+}
+
+.homepage-body-left h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #0f172a;
+}
+
+.homepage-body-left span {
+  font-size: 1rem;
+  color: #475569;
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #0f172a;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #0f172a;
+}
+
+.homepage-body-right {
+  flex: 1 1 300px;
+  max-width: 500px;
+}
+
+.homepage-body-right img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+.homepage-bottom {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.homepage-bottom-content {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.homepage-bottom-content i {
+  font-size: 2rem;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.homepage-bottom-content span {
+  font-size: 1rem;
+  color: #334155;
+  font-weight: 500;
+}
+
+.get-started-btn {
+  background-color: #0f172a;
+  color: white;
+  padding: 0.9rem;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}

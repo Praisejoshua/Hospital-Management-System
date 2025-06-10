@@ -1,0 +1,50 @@
+{% extends "management_system/base.html" %}
+{% load static %}
+{% block content %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'management_system/insights.css' %}"
+/>
+
+<div class="insights-page">
+  <h2><b>Insights</b></h2>
+  <div class="insights-body">
+  
+    <div class="insights-body-content">
+      <h3><b>Completed Appointments</b></h3>
+      <ul>
+        <li>John Doe - 2025-05-01 - General Checkup</li>
+        <li>Jane Smith - 2025-05-04 - Cardiology</li>
+        <li>Mike Johnson - 2025-05-06 - Dermatology</li>
+      </ul>
+    </div>
+
+    <div class="insights-body-content">
+      <h3><b>Health Overview</b></h3>
+      <p>Average Blood Pressure: 120/80 mmHg</p>
+      <p>Most Common Issue: High Cholesterol</p>
+      <p>Most Visited Department: Cardiology</p>
+      <p>Average BMI: 24.5</p>
+    </div>
+
+    <div class="insights-body-content">
+      <h3><b>Pending Appointments</b></h3>
+      <ul>
+        <li>Emily Brown - Awaiting Payment - Neurology</li>
+        <li>Chris Evans - Awaiting Confirmation - Orthopedics</li>
+      </ul>
+    </div>
+
+    <div class="insights-body-content">
+      <h3><b>Upcoming Appointments</b></h3>
+      <ul>
+        <li>Sarah Lee - 2025-06-12 - Dentistry</li>
+        <li>David Miller - 2025-06-14 - Ophthalmology</li>
+        <li>Alice Walker - 2025-06-16 - Physiotherapy</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,226 @@
+{% extends "management_system/base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'management_system/dashboard.css' %}" />
+
+<div class="dashboard-container">
+  <h1>Welcome Back, {{ user.username }}</h1>
+
+  <div class="dashboard-top-content">
+    <div class="dashboard-top-content-box">
+      <h3>18-05-2025</h3>
+      <span>Upcoming<br />Appointment</span>
+    </div>
+    <div class="dashboard-top-content-box">
+      <h3>0</h3>
+      <span>Active<br />Prescriptions</span>
+    </div>
+    <a href="{% url 'patient-notifications' %}" class="notifications-link">
+      <div class="dashboard-top-content-box">
+        <i class="fa-solid fa-bell"></i>
+        <h3>Notifications</h3>
+        <span>View Messages</span>
+      </div>
+    </a>
+    <a href="{% url 'medical-report' %}" class="reports-link">
+      <div class="dashboard-top-content-box">
+        <i class="fa-solid fa-notes-medical"></i>
+        <h3>Report</h3>
+        <span>View Medical Reports</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="patient-dashboard-middle-content">
+    <div class="patient-dashboard-middle-content-left">
+      <div class="patient-middle-content-appointment">
+        <div class="patient-middle-content-book">
+          <h3>Book<br />Appointment</h3>
+          <button type="submit" class="appointment-btn">
+            <i class="fas fa-clipboard-list"></i><br />Book
+          </button>
+        </div>
+        <div class="patient-middle-content-missed">
+          <h3>Missed<br />Appointments</h3>
+          <button type="submit" class="appointment-btn">
+            <i class="fa-solid fa-trash"></i><br />Delete
+          </button>
+        </div>
+      </div>
+
+      <div class="patient-dashboard-history">
+        <h3><b>Upcoming Appointments</b></h3>
+        <table class="patient-appointments-table">
+          {% if appointments %}
+          <thead>
+            <tr>
+              <th class="history-table-header">Date</th>
+              <th class="history-table-header">Doctor</th>
+              <th class="history-table-header">Reason</th>
+              <th class="history-table-header">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for appointment in appointments %}
+            <tr class="patient-history-row">
+              <td class="history-content">{{ appointment.appointment_scheduled_date|date:"F j, Y" }}</td>
+              <td class="history-content">{{ appointment.doctor_selected }}</td>
+              <td class="history-content">{{ appointment.patient_purpose }}</td>
+              <td class="history-content">{{ appointment.status }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          {% else %}
+          <tbody>
+            <tr>
+              <td colspan="4">No appointments found</td>
+            </tr>
+          </tbody>
+          {% endif %}
+        </table>
+        <a href="{% url 'medical-history' %}" class="history-link">View More</a>
+      </div>
+    </div>
+
+    <div class="patient-dashboard-middle-content-right">
+      <button type="submit" id="health-tip-btn">
+        <div class="patient-dashboard-right-content side-btn">
+          <div class="side-btn-icon"><i class="fa-solid fa-apple-whole"></i></div>
+          <div class="side-btn-text">
+            <h2>Health Tips</h2>
+            <span>Simple tips to keep you healthier</span>
+          </div>
+        </div>
+      </button>
+
+      <a href="{% url 'ai-assistant' %}">
+        <div class="patient-dashboard-right-content side-btn">
+          <div class="side-btn-icon"><i class="fa-solid fa-robot"></i></div>
+          <div class="side-btn-text">
+            <h2>A.I.</h2>
+            <span>Your Intelligent Health Assistant</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="{% url 'insights' %}">
+        <div class="patient-dashboard-right-content side-btn">
+          <div class="side-btn-icon"><i class="fa-solid fa-chart-simple"></i></div>
+          <div class="side-btn-text">
+            <h2>Insights</h2>
+            <span>Overview and Trends</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="{% url 'patient-profile' %}">
+        <div class="patient-dashboard-right-content side-btn">
+          <div class="side-btn-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="side-btn-text">
+            <h2>Profile</h2>
+            <span>Manage your Personal Info</span>
+          </div>
+        </div>
+      </a>
+
+      <button type="submit" id="emergency-btn">
+        <div class="patient-dashboard-right-content side-btn">
+          <div class="side-btn-icon"><i class="fa-solid fa-truck-medical"></i></div>
+          <div class="side-btn-text">
+            <h2>Emergency Contacts</h2>
+            <span>Essential info for Urgent Support</span>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Appointment Modal -->
+  <div id="appointmentModal" class="modal">
+    <div class="appointment-modal-body">
+      <span class="appointment-close-btn">&times;</span>
+      <h3>Book Appointment</h3>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Emergency Modal -->
+  <div id="emergencyModal" class="modal">
+    <div class="emergency-modal-body">
+      <span class="emergency-close-btn">&times;</span>
+      <h2><b>EMERGENCY CONTACTS</b></h2>
+      <div class="emergency-modal-content">
+        <h5>MEDICAL CENTER</h5><span>08123456789</span><br /><br />
+        <h5>MEDICAL AMBULANCE</h5><span>08123456789</span><br /><br />
+        <h5>STUDENT AFFAIRS UNIT</h5><span>08123456789</span><br /><br />
+        <h5>CAMPUS SECURITY</h5><span>08123456789</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Health Tip Modal -->
+  <div id="health-tip-modal" class="modal">
+    <div class="health-tip-modal-body">
+      <span class="health-tip-close-btn">&times;</span>
+      <h2><b>HEALTH TIPS</b></h2>
+      <div class="health-tip-modal-content">
+        <span>1. DRINK AT LEAST 2 LITRES OF WATER DAILY</span><br />
+        <span>2. GET AT LEAST 7 HOURS OF SLEEP EACH NIGHT</span><br />
+        <span>3. EAT FRUITS AND VEGETABLES IN EACH MEAL</span><br />
+        <span>4. LIMIT SCREEN TIME</span><br />
+        <span>5. PROTECT YOUR MENTAL HEALTH</span><br />
+        <span>6. STRETCH OR DO LIGHT WORKOUTS FOR 30 MINUTES DAILY</span><br />
+        <span>7. PRACTICE PERSONAL HYGIENE ALWAYS</span><br />
+        <span>8. DON'T IGNORE MINOR SYMPTOMS. VISIT THE CLINIC EARLY</span><br />
+        <span>9. GO FOR REGULAR CHECKUPS</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Emergency Modal
+  const emergencyModal = document.getElementById("emergencyModal");
+  const emergencyBtn = document.getElementById("emergency-btn");
+  const emergencyCloseBtn = emergencyModal.querySelector(".emergency-close-btn");
+
+  emergencyBtn.onclick = () => emergencyModal.style.display = "flex";
+  emergencyCloseBtn.onclick = () => emergencyModal.style.display = "none";
+
+  // Appointment Modal
+  const appointmentModal = document.getElementById("appointmentModal");
+  const appointmentBtn = document.querySelector(".appointment-btn");
+  const appointmentCloseBtn = appointmentModal.querySelector(".appointment-close-btn");
+
+  appointmentBtn.addEventListener("click", e => {
+    e.preventDefault();
+    appointmentModal.style.display = "block";
+  });
+
+  appointmentCloseBtn.addEventListener("click", () => appointmentModal.style.display = "none");
+
+  // Health Tip Modal
+  const HealthTipModal = document.getElementById("health-tip-modal");
+  const HealthTipBtn = document.getElementById("health-tip-btn");
+  const HealthTipCloseBtn = HealthTipModal.querySelector(".health-tip-close-btn");
+
+  HealthTipBtn.addEventListener("click", e => {
+    e.preventDefault();
+    HealthTipModal.style.display = "block";
+  });
+
+  HealthTipCloseBtn.addEventListener("click", () => HealthTipModal.style.display = "none");
+
+  // Close modals when clicking outside them
+  window.addEventListener("click", e => {
+    if (e.target === emergencyModal) emergencyModal.style.display = "none";
+    if (e.target === appointmentModal) appointmentModal.style.display = "none";
+    if (e.target === HealthTipModal) HealthTipModal.style.display = "none";
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+.patient-details-container {
+  padding: 20px;
+}
+.patient-name-heading {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.patient-info-list {
+  list-style: none;
+  padding: 0;
+}
+.patient-info-item {
+  margin: 5px 0;
+}
+.section-divider {
+  margin: 20px 0;
+}
+.appointment-history-heading {
+  font-size: 20px;
+  margin-top: 20px;
+}
+.appointment-history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.appointment-table-header {
+  background-color: #f0f0f0;
+  padding: 8px;
+}
+.appointment-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.appointment-cell {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+.no-appointments-message {
+  font-style: italic;
+  color: #666;
+}
+.back-to-list-link {
+  display: inline-block;
+  margin-top: 20px;
+  color: #007bff;
+  text-decoration: none;
+}
+.back-to-list-link:hover {
+  text-decoration: underline;
+}

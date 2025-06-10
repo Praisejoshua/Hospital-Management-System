@@ -1,0 +1,39 @@
+{% extends "management_system/base.html" %}
+{% load static %}
+{% block content %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'management_system/homepage.css' %}"
+    />
+<div class="homepage">
+    <h1>MedLink</h1>
+    <div class="homepage-body-left">
+        <h2><b>Manage Your Health with Ease</b></h2>
+        <span>An all-in-one platform for patients medical
+        records, appointments and reports</span>
+        <a href="{% url 'register' %}" class="get-started-btn">Get Started</a>
+    </div>
+    <div class="homepage-body-right">
+        <img src="" alt="">
+    </div>
+    <div class="homepage-bottom">
+        <div class="homepage-bottom-content">
+            <i class="fa-solid fa-clipboard-list"></i><br>
+            <span>Appointment<br>Scheduling</span>
+        </div>
+        <div class="homepage-bottom-content">
+            <i class="fa-solid fa-warehouse"></i><br>
+            <span>Medical<br>Inventory</span>
+        </div>
+        <div class="homepage-bottom-content">
+            <i class="fa-solid fa-notes-medical"></i><br>
+            <span>Health<br>Reports</span>
+        </div>
+        <div class="homepage-bottom-content">
+            <i class="fa-solid fa-user"></i><br>
+            <span>Patient<br>Feedback</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

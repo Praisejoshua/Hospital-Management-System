@@ -1,0 +1,30 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %} 
+<div class="register-flex">
+    <div class="register-section-left">
+        <img src="{% static 'users/images/doctor-image.jpg' %}" alt="">
+    </div>
+    <div class="register-section-right">
+        <div class="register-form-container">
+        <form method="POST" class="register-form">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Register For MedLink</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="register-btn btn-outline-info" type="submit">Sign Up</button>
+            </div>
+        </form>
+        <div class="register-bottom-text">
+            <small class="text-muted">
+                Already Have An Account?
+                <a class="ml-2" href="{% url 'login' %}">Sign In</a>
+            </small>
+        </div>
+    </div>
+   </div>
+</div>
+{% endblock content %}

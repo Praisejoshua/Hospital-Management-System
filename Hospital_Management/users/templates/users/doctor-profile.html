@@ -1,0 +1,152 @@
+{% extends "management_system/base.html" %}
+{% load static %}
+{% block content %}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'management_system/profile.css' %}"
+/>
+<div class="patient-profile">
+    <div class="patient-profile-left">
+        <h2>PROFILE</h2>
+            <div class="profile-upload-container">
+        {% if request.user.profile_picture %}
+        <img
+          src="{{ request.user.profile_picture.url }}"
+          class="profile-image"
+          alt="Profile Picture"
+        />
+        {% endif %}
+    </div>
+    </div>
+    <div class="patient-profile-right">
+        <h2>PERSONAL INFORMATION</h2>
+        <div class="personal-information">
+            <div class="personal-information-left">
+                <div class="personal-information-left-content">
+                    <h4>FIRST NAME</h4>
+                    <span>{{ user.first_name }}</span>
+                </div>
+                <div class="personal-information-left-content">
+                    <h4>GENDER</h4>
+                    <span>{{ user.gender }}</span>
+                </div>
+                <div class="personal-information-left-content">
+                    <h4>PHONE</h4>
+                    <span>{{ user.phone }}</span>
+                </div>
+            </div>
+            <div class="personal-information-middle">
+                <div class="personal-information-middle-content">
+                    <h4>MIDDLE NAME</h4>
+                    <span>{{ user.middle_name }}</span>
+                </div>
+                <div class="personal-information-middle-content">
+                    <h4>D.O.B</h4>
+                    <span>{{ user.date_of_birth }}</span>
+                </div>
+                <div class="personal-information-middle-content">
+                    <h4>BLOOD GROUP</h4>
+                    <span>{{ user.blood_group }}</span>
+                </div>
+            </div>
+            <div class="personal-information-right">
+                <div class="personal-information-right-content">
+                    <h4>LAST NAME</h4>
+                    <span>{{ user.last_name }}</span>
+                </div>
+                <div class="personal-information-right-content">
+                    <h4>MARITAL STATUS</h4>
+                    <span>{{ user.marital_status }}</span>
+                </div>
+                <div class="personal-information-right-content">
+                    <h4>E-MAIL</h4>
+                    <span>{{ user.email }}
+            </div>
+        </div>
+        <button onclick="openProfilePopup()" class="create-profile-btn">Edit Profile</button>
+
+<!-- Popup Modal -->
+        <div id="profileModal" class="profile-modal">
+            <div class="profile-modal-content">
+                <span class="close" onclick="closeProfilePopup()">&times;</span>
+                <h2>Create Profile</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="profile-modal-grid">
+                        <div>
+                            <label>First Name</label>
+                            <input type="text" name="first_name" placeholder="First Name" required />
+                        </div>
+                        <div>
+                            <label>Middle Name</label>
+                            <input type="text" name="middle_name" placeholder="Middle Name" required />
+                        </div>
+                        <div>
+                            <label>Last Name</label>
+                            <input type="text" name="last_name" placeholder="Last Name" required />
+                        </div>
+                        <div>
+                            <label>Gender</label>
+                            <select name="gender" required>
+                                <option value="" disabled selected>Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>D.O.B</label>
+                            <input name="dob" type="date" required />
+                        </div>
+                        <div>
+                            <label>Blood Group</label>
+                            <select name="blood_group" required>
+                                <option value="" disabled selected>Select Blood Group</option>
+                                <option value="AA">AA</option>
+                                <option value="AS">AS</option>
+                                <option value="SS">SS</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Marital Status</label>
+                            <select name="marital_status" required>
+                                <option value="" disabled selected>Select Martial Status</option>
+                                <option value="single">Single</option>
+                                <option value="married">Married</option>
+                                <option value="divorced">Divorced</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Phone</label>
+                            <input type="tel" name="phone" placeholder="Phone Number" required />
+                        </div>
+                        <div>
+                            <label>Email</label>
+                            <input type="email" name="email" placeholder="Email" required />
+                        </div>
+                    </div>
+                    <button type="submit">Save Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  function openProfilePopup() {
+    document.getElementById("profileModal").style.display = "flex";
+  }
+
+  function closeProfilePopup() {
+    document.getElementById("profileModal").style.display = "none";
+  }
+
+  // Optional: Close on outside click
+  window.onclick = function(event) {
+    const modal = document.getElementById("profileModal");
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
+{% endblock %}

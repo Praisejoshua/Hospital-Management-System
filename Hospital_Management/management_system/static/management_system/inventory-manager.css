@@ -1,0 +1,167 @@
+.history-page-wrapper {
+  padding: 30px;
+  max-width: 1000px;
+  margin: auto;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.history-page-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.medical-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.medical-history-table-header {
+  background-color: #0f172a;
+  color: white;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.medical-history-row:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.medical-history-row:hover {
+  background-color: #e6f0ff;
+}
+
+.medical-history-table-content {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .history-page-wrapper {
+    padding: 15px;
+  }
+
+  .history-page-title {
+    font-size: 1.5rem;
+  }
+
+  .medical-history-table {
+    border: 0;
+    box-shadow: none;
+  }
+
+  .medical-history-table thead {
+    display: none;
+  }
+
+  .medical-history-table tr {
+    display: block;
+    margin-bottom: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .medical-history-table-content {
+    display: block;
+    text-align: right;
+    font-size: 0.9rem;
+    border-bottom: none;
+    padding: 8px 0;
+  }
+
+  .medical-history-table-content::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: #0f172a;
+  }
+}
+
+.inventory-manager-btn {
+  text-decoration: none;
+}
+
+.inventory-filters {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.inventory-filters input,
+.inventory-filters select,
+.inventory-filters button {
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.export-btn {
+  padding: 8px 12px;
+  background-color: #0f172a;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.low-stock {
+  color: orange;
+  font-weight: bold;
+}
+
+.out-stock {
+  color: red;
+  font-weight: bold;
+}
+
+.badge {
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 5px;
+  color: white;
+  display: inline-block;
+}
+
+.badge-in {
+  background-color: green;
+}
+
+.badge-low {
+  background-color: orange;
+}
+
+.badge-out {
+  background-color: red;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination a {
+  margin: 0 8px;
+  text-decoration: none;
+  color: #0f172a;
+  font-weight: bold;
+}
+
+.pagination span {
+  margin: 0 10px;
+  color: #333;
+}

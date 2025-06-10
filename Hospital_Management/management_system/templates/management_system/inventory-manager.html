@@ -1,0 +1,71 @@
+{% extends "management_system/base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'management_system/inventory-manager.css' %}" />
+
+<div class="history-page-wrapper">
+    <h2 class="history-page-title">Inventory Manager</h2>
+
+    <!-- Search, Filter & Export -->
+    <form method="get" class="inventory-filters">
+        <input type="text" name="q" placeholder="Search by name" value="{{ request.GET.q }}" />
+        <select name="category">
+            <option value="">All Categories</option>
+            {% for cat in categories %}
+                <option value="{{ cat }}" {% if request.GET.category == cat %}selected{% endif %}>{{ cat }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filter</button>
+        <a href="{% url 'export-inventory' %}" class="export-btn">Export CSV</a>
+    </form>
+
+    <table class="medical-history-table">
+        <thead>
+            <tr>
+                <th class="medical-history-table-header">#</th>
+                <th class="medical-history-table-header">Name</th>
+                <th class="medical-history-table-header">Stock</th>
+                <th class="medical-history-table-header">Status</th>
+                <th class="medical-history-table-header">Category</th>
+                <th class="medical-history-table-header">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inventory in inventory %}
+            <tr class="medical-history-row">
+                <td class="medical-history-table-content">{{ forloop.counter }}</td>
+                <td class="medical-history-table-content">{{ inventory.item_name }}</td>
+                <td class="medical-history-table-content {% if inventory.stock == 0 %}out-stock{% elif inventory.stock < 5 %}low-stock{% endif %}">
+                    {{ inventory.stock }}
+                </td>
+                <td class="medical-history-table-content">
+                    <span class="badge 
+                        {% if inventory.stock == 0 %}badge-out
+                        {% elif inventory.stock < 5 %}badge-low
+                        {% else %}badge-in{% endif %}">
+                        {% if inventory.stock == 0 %}Out of Stock
+                        {% elif inventory.stock < 5 %}Low Stock
+                        {% else %}In Stock{% endif %}
+                    </span>
+                </td>
+                <td class="medical-history-table-content">{{ inventory.category }}</td>
+                <td class="medical-history-table-content">{{ inventory.date_added|date:"F d, Y" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="medical-history-table-content">No inventory found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        {% if inventory.has_previous %}
+            <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}page={{ inventory.previous_page_number }}">Previous</a>
+        {% endif %}
+        <span>Page {{ inventory.number }} of {{ inventory.paginator.num_pages }}</span>
+        {% if inventory.has_next %}
+            <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}page={{ inventory.next_page_number }}">Next</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

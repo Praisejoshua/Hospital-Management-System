@@ -1,0 +1,36 @@
+{% extends "management_system/base.html" %} {% load static %} {% block content %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'management_system/notifications.css' %}"
+/>
+<div class="patient-notif-page">
+  <h2 class="notif-title">Your Notifications</h2>
+  {% if notifications %}
+  <ul class="notif-list">
+    {% for notification in notifications %}
+    <li class="notif-item">
+      <div class="notif-content">
+        {{ notification.message }}<br />
+        {% if notification.appointment %} Appointment ID: {{ notification.appointment.id }} {% endif %}
+        <span class="notif-date"
+          >{{ notification.date_created|date:"M d, Y H:i" }}</span
+        >
+      </div>
+      <form
+        method="post"
+        action="{% url 'patient_delete_notification' notification.id %}"
+        class="notif-form"
+      >
+        {% csrf_token %}
+        <button type="submit" class="notif-delete-btn">Delete</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% else %}
+  <p class="notif-empty">No notifications.</p>
+  {% endif %}
+</div>
+{% endblock %}

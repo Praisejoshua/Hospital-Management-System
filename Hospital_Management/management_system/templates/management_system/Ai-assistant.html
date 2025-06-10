@@ -1,0 +1,125 @@
+{% extends "management_system/base.html" %}
+{% load static %}
+
+{% block title %}AI Assistant{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'management_system/assistant.css' %}">
+
+
+<div class="page-container">
+  <header>
+    <div class="header">AI Assistant</div>
+    <div class="tagline">Get instant answers to your health-related questions.</div>
+    <div class="sub-header">How can I assist you today?</div>
+  </header>
+
+  <section class="chat-row" id="chat-row">
+    <!-- Chat messages will appear here -->
+  </section>
+
+  <div class="small-box">
+    <input type="text" id="chat-input" class="chat-input" placeholder="Type your question..." autocomplete="off" />
+    <button id="submit-btn" class="submit-btn">Send</button>
+  </div>
+</div>
+
+<script>
+  const chatRow = document.getElementById('chat-row');
+  const chatInput = document.getElementById('chat-input');
+  const submitBtn = document.getElementById('submit-btn');
+
+  // Helper to get CSRF token from cookies (Django default)
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let cookie of cookies) {
+        cookie = cookie.trim();
+        if (cookie.startsWith(name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  async function getModelResponse(userMessage) {
+    try {
+      const response = await fetch('/get-answer/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'),
+        },
+        body: JSON.stringify({ question: userMessage }),
+      });
+
+      const data = await response.json();
+
+      if (data.answer) {
+        return data.answer;
+      } else {
+        return "Sorry, I don't have an answer for that right now.";
+      }
+    } catch (error) {
+      console.error('Error fetching model response:', error);
+      return "Sorry, I don't have an answer for that right now.";
+    }
+  }
+
+  function appendMessage(userMsg, botMsg) {
+    // User bubble (right) — keep uppercase if you want
+    const userBubble = document.createElement('div');
+    userBubble.classList.add('user-bubble');
+    userBubble.textContent = userMsg.toUpperCase();
+
+    // Bot bubble (left) — keep natural casing, no uppercase
+    const botBubble = document.createElement('div');
+    botBubble.classList.add('bot-bubble');
+    botBubble.textContent = botMsg;
+
+    chatRow.appendChild(userBubble);
+    chatRow.appendChild(botBubble);
+
+    // Scroll to the bottom
+    chatRow.scrollTop = chatRow.scrollHeight;
+  }
+
+  async function handleSubmit() {
+    const userMessage = chatInput.value.trim();
+    if (!userMessage) return;
+
+    // Disable input while waiting for response
+    chatInput.disabled = true;
+    submitBtn.disabled = true;
+
+    // Clear input box
+    chatInput.value = '';
+
+    // Get model response from Django backend
+    const botResponse = await getModelResponse(userMessage);
+
+    // Append messages to chat area
+    appendMessage(userMessage, botResponse);
+
+    // Enable input again
+    chatInput.disabled = false;
+    submitBtn.disabled = false;
+    chatInput.focus();
+  }
+
+  submitBtn.addEventListener('click', handleSubmit);
+
+  chatInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSubmit();
+    }
+  });
+
+
+</script>
+
+
+{% endblock %}

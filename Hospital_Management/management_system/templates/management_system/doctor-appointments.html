@@ -1,0 +1,223 @@
+{% extends "management_system/base.html" %} {% load static %} {% block content%}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'management_system/doctor-appointments.css' %}"
+/>
+<div class="doctor-appointments-body">
+  <h1>Appointment Manager</h1>
+  <div class="doctor-appointments-body-content">
+    <h3>Incoming Appointment Requests</h3>
+    <table class="doctor-appointments-table">
+      {% if appointments %}
+      <thead>
+        <tr>
+          <th class="appointments-table-header">ID</th>
+          <th class="appointments-table-header">Patient</th>
+          <th class="appointments-table-header">Date</th>
+          <th class="appointments-table-header">Status</th>
+          <th class="appointments-table-header">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for appointment in appointments %}
+        <tr class="doctor-appointments-row">
+          <td class="appointments-content">{{ appointment.id }}</td>
+          <td class="appointments-content">{{ appointment.patient_first_name }} {{ appointment.patient_last_name }}</td>
+          <td class="appointments-content">
+            {{ appointment.appointment_creation_date|date:"F j, Y" }}
+          </td>
+          <td class="appointments-content">{{ appointment.status }}</td>
+          <td class="appointments-content">
+            <div class="appointment-button-group">
+              <form
+                method="post"
+                action="{% url 'handle_appointment' appointment.id 0 %}?action=accept"
+              >
+                {% csrf_token %}
+                <button class="accept-btn" type="submit">Accept</button>
+              </form>
+              <form
+                method="post"
+                action="{% url 'handle_appointment' appointment.id 0 %}?action=reject"
+              >
+                {% csrf_token %}
+                <button type="submit" class="reject-btn">Reject</button>
+              </form>
+              <button
+                type="submit"
+                id="appointment-details-btn"
+                class="appointment-details-btn"
+                data-id="{{ appointment.id }}"
+                data-name="{{ appointment.patient_name }}"
+                data-date="{{ appointment.appointment_creation_date|date:'F j, Y' }}"
+                data-purpose="{{ appointment.patient_purpose }}"
+              >
+                View
+              </button>
+            </div>
+          </td>
+        </tr>
+        {% endfor %} {% else %}
+        <p>No appointments found</p>
+      </tbody>
+      {% endif %}
+    </table>
+  </div>
+  <hr />
+  <div class="doctor-appointments-body-content">
+    <h3>Approved Appointments</h3>
+    <table class="doctor-appointments-table">
+      {% if accepted_appointments %}
+      <thead>
+        <tr>
+          <th class="appointments-table-header">ID</th>
+          <th class="appointments-table-header">Patient</th>
+          <th class="appointments-table-header">Scheduled Date</th>
+          <th class="appointments-table-header">Status</th>
+          <th class="appointments-table-header">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for accepted in accepted_appointments %}
+        <tr class="doctor-appointments-row">
+          <td class="appointments-content">{{ accepted.id }}</td>
+          <td class="appointments-content">{{ accepted.patient_first_name }} {{ accepted.patient_last_name }}</td>
+          <td class="appointments-content">
+            {{ accepted.appointment_scheduled_date|date:"F j, Y" }}
+          </td>
+          <td class="appointments-content">{{ accepted.status }}</td>
+          <td class="appointments-content">
+            <div class="appointment-button-group">
+              <button
+                type="button"
+                class="end-btn open-set-date-modal"
+                data-id="{{ accepted.id }}"
+              >
+                Set Date
+              </button>
+              <form action="{% url 'handle_appointment' accepted.id accepted.id %}?action=complete" method="post">
+                {% csrf_token %}
+                <button type="submit" class="end-btn">End</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %} {% else %}
+        <p>You have no accepted appointments currently</p>
+      </tbody>
+      {% endif %}
+    </table>
+  </div>
+  <hr>
+  <div class="doctor-appointments-body-content">
+    <h3>Completed Appointments</h3>
+    <table class="doctor-appointments-table">
+      {% if ended_appointments %}
+      <thead>
+        <tr>
+          <th class="appointments-table-header">ID</th>
+          <th class="appointments-table-header">Patient</th>
+          <th class="appointments-table-header">Scheduled Date</th>
+          <th class="appointments-table-header">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ended in ended_appointments %}
+        <tr class="doctor-appointments-row">
+          <td class="appointments-content">{{ ended.id }}</td>
+          <td class="appointments-content">{{ ended.patient_first_name }} {{ ended.patient_last_name }}</td>
+          <td class="appointments-content">
+            {{ ended.appointment_scheduled_date|date:"F j, Y" }}
+          </td>
+          <td class="appointments-content">{{ ended.status }}</td>
+        </tr>
+        {% endfor %} {% else %}
+        <p>You have no completed appointments</p>
+      </tbody>
+      {% endif %}
+    </table>
+  </div>
+  <div id="appointment-details-modal" class="modal">
+    <div class="appointment-details-modal-body">
+      <span class="appointment-details-close-btn">&times;</span>
+      <h3><b>Appointment Details</b></h3>
+      <div class="appointment-details-modal-content">
+        <span><b>Appointment ID</b></span>
+        <span id="modal-id"></span><br />
+        <span><b>Patient Name</b></span>
+        <span id="modal-name"></span><br />
+        <hr />
+        <span><b>Date</b></span>
+        <span id="modal-date"></span><br />
+        <span><b>Reason</b></span>
+        <span id="modal-purpose"></span>
+      </div>
+    </div>
+  </div>
+  <div id="set-date-modal" class="modal" style="display: none">
+    <div class="modal-content">
+      <span class="close-btn" id="close-set-date-modal">&times;</span>
+      <form method="post" id="set-date-form" action="">
+        {% csrf_token %}
+        <label for="scheduled_date">Select Date:</label>
+        <input type="date" name="appointment_scheduled_date" required />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // === Appointment Details Modal ===
+    const appointmentModal = document.getElementById("appointment-details-modal");
+    const appointmentCloseBtn = appointmentModal?.querySelector(".appointment-details-close-btn");
+
+    document.querySelectorAll(".appointment-details-btn").forEach((btn) => {
+      btn.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        document.getElementById("modal-id").innerText = this.dataset.id;
+        document.getElementById("modal-name").innerText = this.dataset.name;
+        document.getElementById("modal-date").innerText = this.dataset.date;
+        document.getElementById("modal-purpose").innerText = this.dataset.purpose;
+
+        appointmentModal.style.display = "block";
+      });
+    });
+
+    appointmentCloseBtn?.addEventListener("click", function () {
+      appointmentModal.style.display = "none";
+    });
+
+    window.addEventListener("click", function (e) {
+      if (e.target === appointmentModal) {
+        appointmentModal.style.display = "none";
+      }
+    });
+
+    // === Set Date Modal ===
+    const setDateModal = document.getElementById("set-date-modal");
+    const closeSetDateBtn = document.getElementById("close-set-date-modal");
+    const setDateForm = document.getElementById("set-date-form");
+
+    document.querySelectorAll(".open-set-date-modal").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const appointmentId = this.dataset.id;
+        setDateForm.action = `/handle-appointment/${appointmentId}/${appointmentId}/?action=setDate`;
+        setDateModal.style.display = "block";
+      });
+    });
+
+    closeSetDateBtn.addEventListener("click", function () {
+      setDateModal.style.display = "none";
+    });
+
+    window.addEventListener("click", function (e) {
+      if (e.target === setDateModal) {
+        setDateModal.style.display = "none";
+      }
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "management_system/base.html" %}
+{% load static %}
+{% block content %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'management_system/analytics-and-reports.css' %}"
+    />
+    <div class="history-page-wrapper">
+        <h2 class="history-page-title">Analytics and Report</h2>
+            <table class="medical-history-table">
+                <thead>
+                    {% if medical_report %}
+                    <tr>
+                        <th class="medical-history-table-header">Name</th>
+                        <th class="medical-history-table-header">Request Date</th>
+                        <th class="medical-history-table-header">Reason of Request</th>
+                        <th class="medical-history-table-header">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for report in medical_report %}
+                    <tr class="medical-history-row">
+                        <td class="medical-history-table-content">{{ report.name }}</td>
+                        <td class="medical-history-table-content">{{ report.date }}</td>
+                        <td class="medical-history-table-content">{{ report.reason }}</td>
+                        <td class="medical-history-table-content">{{ report.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% endif %}
+            </table>
+    </div>
+{% endblock %}

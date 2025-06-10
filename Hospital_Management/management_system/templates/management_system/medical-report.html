@@ -1,0 +1,44 @@
+{% extends "management_system/base.html" %}
+{% load static %}
+{% block content %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'management_system/medical-history.css' %}"
+    />
+    <div class="history-page-wrapper">
+        <h2 class="history-page-title">Medical Report</h2>
+            <table class="medical-history-table">
+                <thead>
+                    {% if appointments %}
+                    <tr>
+                        <th class="medical-history-table-header">ID</th>
+                        <th class="medical-history-table-header">Date</th>
+                        <th class="medical-history-table-header">Diagnosis</th>
+                        <th class="medical-history-table-header">Prescription</th>
+                        <th class="medical-history-table-header">Doctor's Note</th>
+                        <th class="medical-history-table-header">Doctor</th>
+                        <th class="medical-history-table-header">Status</th>
+                        <th class="medical-history-table-header">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr class="medical-history-row">
+                        <td class="medical-history-table-content">{{ appointment.id }}</td>
+                        <td class="medical-history-table-content">{{ appointment.appointment_scheduled_date|date:"F j, Y" }}</td>
+                        <td class="medical-history-table-content">{{ appointment.diagnosis }}</td>
+                        <td class="medical-history-table-content">{{ appointment.prescription }}</td>
+                        <td class="medical-history-table-content">{{ appointment.doctor_notes }}</td>
+                        <td class="medical-history-table-content">{{ appointment.doctor_selected }}</td>
+                        <td class="medical-history-table-content">{{ appointment.status }}</td>
+                        <td class="medical-history-table-content"><a href="{% url 'download_report' appointment.id %}">Download</a></td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                <p>No appointments found</p>
+                </tbody>
+                {% endif %}
+            </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,103 @@
+.medical-report {
+  max-width: 850px;
+  margin: auto;
+  border: 1px solid #ccc;
+  padding: 40px;
+  background-color: #fdfdfd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.report-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #0f172a;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+.logo {
+  height: 80px;
+  margin-right: 20px;
+}
+
+.report-title h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #0f172a;
+}
+
+.report-title p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.info-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  vertical-align: top;
+}
+
+.info-table td:first-child {
+  font-weight: 600;
+  width: 200px;
+  background-color: #f0f4ff;
+}
+
+.summary-text {
+  background-color: #f8f9fa;
+  border-left: 5px solid #0f172a;
+  padding: 15px;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+@media print {
+  body {
+    padding: 0;
+    background: none;
+  }
+
+  .medical-report {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+  }
+
+  .logo {
+    height: 60px;
+  }
+
+  .summary-text {
+    border-left-color: #000;
+  }
+
+  .footer {
+    color: #000;
+  }
+}

@@ -1,0 +1,157 @@
+{% extends "management_system/base.html" %} {% load static %} {% block content %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'management_system/dashboard.css' %}"
+/>
+<div class="dashboard-container">
+  <h1>Welcome Back, Dr. {{ user.username }}</h1>
+  <div class="dashboard-top-content">
+    <div class="dashboard-top-content-box">
+      <span
+        >Today's<br />
+        Appointments</span
+      ><br />
+      <b>12 Booked</b>
+    </div>
+    <div class="dashboard-top-content-box">
+      <span
+        >Patients<br />
+        in Queue</span
+      ><br />
+      <b>5 Waiting</b>
+    </div>
+    <div class="dashboard-top-content-box">
+      <span
+        >Last<br />
+        Clinic Visit</span
+      ><br />
+      <b>3 to Review</b>
+    </div>
+    <a href="{% url 'doctor-notifications' %}" class="notifications-link">
+      <div class="dashboard-top-content-box">
+        <i class="fa-solid fa-bell"></i>
+        <h3>Notifications</h3>
+        <span>View Messages</span>
+      </div>
+    </a>
+  </div>
+  <div class="doctor-dashboard-middle-content">
+    <div class="doctor-dashboard-appointments">
+      <table class="doctor-table">
+        <h3><b>Upcoming Appointments</b></h3>
+        {% if appointments %}
+        <thead>
+          <tr>
+            <th class="history-table-header">ID</th>
+            <th class="history-table-header">Patient</th>
+            <th class="history-table-header">Reason</th>
+            <th class="history-table-header">Schedule Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appointment in appointments %}
+          <tr class="patient-history-row">
+            <td class="history-content">{{ appointment.id }}</td>
+            <td class="history-content">{{ appointment.patient_first_name }} {{ appointment.patient_last_name }}</td>
+            <td class="history-content">{{ appointment.patient_purpose }}</td>
+            <td class="history-content">{{ appointment.appointment_creation_date|date:"F j, Y" }}</td>
+          </tr>
+          {% endfor %} {% else %}
+          <p>You have no appointments today.</p>
+        </tbody>
+        {% endif %}
+      </table>
+    </div>
+  </div>
+  <div class="doctor-dashboard-bottom-content">
+    <button id="diagnosis-btn">
+      <div class="doctor-dashboard-bottom-content-box">
+        <i class="fa-solid fa-clipboard"></i>
+        <span>Add New<br />Diagnosis</span><br />
+      </div>
+    </button>
+    <a href="{% url 'report_analytics' %}" class="approve-medical-report-btn">
+      <div class="doctor-dashboard-bottom-content-box">
+        <i class="fa-solid fa-chart-simple"></i>
+        <span>Analytics <br>and Reports</span><br />
+      </div>
+    </a>
+
+        <a href="{% url 'approve-medical-report' %}" class="approve-medical-report-btn">
+      <div class="doctor-dashboard-bottom-content-box">
+        <i class="fa-solid fa-notes-medical"></i>
+        <span>Approve<br />Medical Report</span><br />
+      </div>
+    </a>
+    <a
+      href="{% url 'doctor-inventory-manager' %}"
+      class="inventory-manager-btn"
+    >
+      <div class="doctor-dashboard-bottom-content-box">
+        <i class="fa-solid fa-warehouse"></i>
+        <span>Inventory<br />Check</span><br />
+      </div>
+    </a>
+  </div>
+  <div id="diagnosis-modal" class="modal">
+    <div class="diagnosis-modal-body">
+      <span class="diagnosis-close-btn">&times;</span>
+      <h3><b>Add New Diagnosis</b></h3>
+      <div class="diagnosis-modal-content">
+        <form method="post">
+          {% csrf_token %}
+          <label for="appointment_id">Appointment ID</label>
+          <select id="appointment_id" name="appointment_id" required>
+            <option value="" disabled selected>Select an Appointment</option>
+            {% for appointment in appointments %}
+            <option value="{{ appointment.id }}">{{ appointment.id }}</option>
+            {% endfor %}
+          </select>
+          <label for="diagnosis">Diagnosis</label>
+          <input type="text" name="diagnosis" max="20" />
+          <label for="doctor_notes">Prescription</label>
+          <input type="text" name="prescription" max="50" />
+          <label for="doctor_notes">Notes</label>
+          <textarea
+            name="doctor_notes"
+            id="doctor_notes"
+            placeholder="Write your notes here..."
+            maxlength="50"
+          ></textarea>
+          <label for="doctor_result">Result</label>
+          <input
+            type="text"
+            name="doctor_result"
+            placeholder="Result"
+            max="30"
+          />
+          <button type="submit" class="diagnosis-submit-btn">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("diagnosis-modal");
+    const openBtn = document.getElementById("diagnosis-btn");
+    const closeBtn = document.querySelector(".diagnosis-close-btn");
+
+    openBtn.addEventListener("click", function () {
+      modal.style.display = "block";
+    });
+
+    closeBtn.addEventListener("click", function () {
+      modal.style.display = "none";
+    });
+
+    window.addEventListener("click", function (event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,474 @@
+/* Reset & Base */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", "Times New Roman";
+}
+
+body {
+  background-color: #f7f9fc;
+  color: #333;
+  background-image: url("../management_system/images/hospital-image.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.notifications-link {
+  text-decoration: none;
+}
+
+/* sidebar */
+.sidebar {
+  width: 60px;
+  background-color: #0f172a;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+  position: fixed;
+  height: 100vh;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  transition: width 0.3s ease;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.sidebar:hover {
+  width: 200px;
+}
+
+.logo h2 {
+  color: #fff;
+  margin: 0;
+  font-size: 1.5rem;
+  white-space: nowrap;
+  opacity: 0;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar:hover .logo h2 {
+  opacity: 1;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.nav-links li {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.nav-links a,
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 1rem 1.2rem;
+  color: #f8fafc;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.nav-links a i,
+.logout-btn i {
+  font-size: 1.2rem;
+  min-width: 24px;
+  text-align: center;
+}
+
+.nav-links a span,
+.logout-btn span {
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar:hover .nav-links a span,
+.sidebar:hover .logout-btn span {
+  opacity: 1;
+}
+
+.nav-links a:hover,
+.logout-btn:hover {
+  background-color: #1e293b;
+}
+
+.auth-btns form {
+  margin: 0;
+}
+
+/* Content */
+.main-content {
+  margin-left: 80px;
+  padding: 2rem;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+#message-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 15px;
+  color: #fff;
+  background: #0f172a;
+}
+
+/* Footer */
+.footer {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 50px 0 20px 0;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.footer h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.footer p,
+.footer li,
+.footer a {
+  color: #ccc;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-section-links li {
+  margin-bottom: 8px;
+}
+
+.footer-section-links ul li a {
+  text-decoration: none;
+}
+
+.footer-section-contact p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid #444;
+  padding-top: 15px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* Modals */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.appointment-modal-body,
+.emergency-modal-body,
+.health-tip-modal-body,
+.appointment-details-modal-body,
+.diagnosis-modal-body {
+  background-color: #fff;
+  margin: 1% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.emergency-modal-body,
+.health-tip-modal-body {
+  background-color: #fff;
+  padding: 20px 30px;
+  text-align: center;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 95%;
+}
+
+.health-tip-modal-content {
+  text-align: left;
+  font-size: 1rem;
+}
+
+.emergency-modal-body h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+#emergency-btn,
+#health-tip-btn {
+  border: none;
+  background-color: white;
+  text-align: left;
+}
+
+.diagnosis-modal-body h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #222;
+}
+
+.diagnosis-modal-content {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.diagnosis-modal-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.diagnosis-modal-content label {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.diagnosis-modal-content input,
+.diagnosis-modal-content textarea,
+.diagnosis-modal-content select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+  outline: none;
+}
+
+.diagnosis-modal-content input:focus,
+.diagnosis-modal-content textarea:focus {
+  border-color: #0f172a;
+}
+
+.diagnosis-modal-content textarea {
+  resize: vertical;
+  min-height: 100px;
+  max-height: 200px;
+}
+
+.diagnosis-submit-btn {
+  margin-top: 25px;
+  padding: 12px;
+  background-color: #0f172a;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.diagnosis-submit-btn:hover {
+  background-color: #1e293b;
+}
+
+.appointment-close-btn,
+.emergency-close-btn,
+.health-tip-close-btn,
+.appointment-details-close-btn,
+.diagnosis-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.appointment-modal-body input,
+.appointment-modal-body textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #d7daff;
+}
+
+.appointment-modal-body button,
+.emergency-modal-body button,
+.health-tip-modal-body button,
+.diagnosis-submit-btn {
+  background-color: #0f172a;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.appointment-details-close-btn {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  transition: color 0.2s ease;
+}
+
+.appointment-details-close-btn:hover {
+  color: #000;
+}
+
+.appointment-details-modal-content h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.appointment-details-modal-content span {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #444;
+}
+
+.appointment-details-modal-content {
+  text-align: left;
+}
+
+.appointment-details-modal-content span b {
+  color: #222;
+  display: inline-block;
+  min-width: 80px;
+}
+
+/* Authorization Page */
+.access-denied-container {
+  text-align: center;
+  padding: 40px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.access-denied-container h2 {
+  color: #0f172a;
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.access-denied-container p {
+  color: #555;
+  font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+  }
+
+  .footer-section-about,
+  .footer-section-links,
+  .footer-section-contact {
+    width: 100%;
+  }
+
+  .footer-section-links ul {
+    padding-left: 0;
+  }
+
+  .footer-section-links ul li {
+    list-style: none;
+  }
+
+  .footer h2 {
+    font-size: 18px;
+  }
+
+  .footer p,
+  .footer a,
+  .footer li {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 40px 10px 15px 10px;
+  }
+
+  .footer h2 {
+    font-size: 16px;
+  }
+
+  .footer-bottom {
+    font-size: 13px;
+  }
+
+  .footer-section-contact p {
+    font-size: 13px;
+  }
+
+  .footer-section-contact box-icon {
+    width: 16px;
+    height: 16px;
+  }
+}

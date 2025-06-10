@@ -1,0 +1,54 @@
+{% extends "management_system/base.html" %}
+{% load static %}
+{% block content %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'management_system/view-patient-records.css' %}"
+/>
+
+<div class="patient-details-container">
+  <h1 class="patient-name-heading">{{ patient.first_name }} {{ patient.last_name }} - Details</h1>
+
+  <ul class="patient-info-list">
+    <li class="patient-info-item"><strong>Gender:</strong> {{ patient.gender }}</li>
+    <li class="patient-info-item"><strong>Date of Birth:</strong> {{ patient.date_of_birth }}</li>
+    <li class="patient-info-item"><strong>Blood Group:</strong> {{ patient.blood_group }}</li>
+    <li class="patient-info-item"><strong>Allergies:</strong> {{ patient.allergies }}</li>
+  </ul>
+
+  <hr class="section-divider" />
+
+  <h2 class="appointment-history-heading">Appointment History</h2>
+
+  {% if appointments %}
+  <table class="appointment-history-table">
+    <thead>
+      <tr>
+        <th class="appointment-table-header">ID</th>
+        <th class="appointment-table-header">Scheduled Date</th>
+        <th class="appointment-table-header">Doctor</th>
+        <th class="appointment-table-header">Diagnosis</th>
+        <th class="appointment-table-header">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for appointment in appointments %}
+      <tr class="appointment-row">
+        <td class="appointment-cell">{{ appointment.id }}</td>
+        <td class="appointment-cell">{{ appointment.appointment_scheduled_date|date:"F j, Y" }}</td>
+        <td class="appointment-cell">{{ appointment.doctor_selected }}</td>
+        <td class="appointment-cell">{{ appointment.diagnosis }}</td>
+        <td class="appointment-cell">{{ appointment.status }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="no-appointments-message">No appointment history available.</p>
+  {% endif %}
+
+  <a href="{% url 'patient-records' %}" class="back-to-list-link">← Back to Patient List</a>
+</div>
+
+{% endblock %}
