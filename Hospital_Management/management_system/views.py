@@ -483,3 +483,39 @@ def get_ai_response(request):
             answer = "Sorry, I don't have an answer for that right now."
 
         return JsonResponse({'answer': answer})
+
+# Random Health Tip View
+@method_decorator(login_required, name='dispatch')
+class RandomHealthTipView(View):
+    def get(self, request, *args, **kwargs):
+        tip = get_random_health_tips()
+        return JsonResponse({'health_tip': tip})
+
+
+
+    def post(self, request, *args, **kwargs):
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            patient_name = form.cleaned_data['patient_name']
+            patient_matric = form.cleaned_data['patient_matric']
+            patient_purpose = form.cleaned_data['patient_purpose']
+            doctor_selected = form.cleaned_data['doctor_selected']
+
+            appointment = Appointments.objects.create(
+                user=request.user,
+                patient_name=patient_name,
+                patient_matric=patient_matric,
+                patient_purpose=patient_purpose,
+                doctor_selected=doctor_selected
+            )
+
+            Notification.objects.create(
+                user=doctor_selected,
+                message="You have received a new appointment!",
+                appointment=appointment
+            )
+
+            messages.success(request, "Appointment booked successfully.")
+            return self.render_to_response(self.get_context_data(success=True))
+
+        return self.render_to_response(self.get_context_data(form=form))

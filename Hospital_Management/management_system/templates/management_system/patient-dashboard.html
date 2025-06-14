@@ -168,15 +168,8 @@
       <span class="health-tip-close-btn">&times;</span>
       <h2><b>HEALTH TIPS</b></h2>
       <div class="health-tip-modal-content">
-        <span>1. DRINK AT LEAST 2 LITRES OF WATER DAILY</span><br />
-        <span>2. GET AT LEAST 7 HOURS OF SLEEP EACH NIGHT</span><br />
-        <span>3. EAT FRUITS AND VEGETABLES IN EACH MEAL</span><br />
-        <span>4. LIMIT SCREEN TIME</span><br />
-        <span>5. PROTECT YOUR MENTAL HEALTH</span><br />
-        <span>6. STRETCH OR DO LIGHT WORKOUTS FOR 30 MINUTES DAILY</span><br />
-        <span>7. PRACTICE PERSONAL HYGIENE ALWAYS</span><br />
-        <span>8. DON'T IGNORE MINOR SYMPTOMS. VISIT THE CLINIC EARLY</span><br />
-        <span>9. GO FOR REGULAR CHECKUPS</span>
+        <!-- <span id="tip-context"> {{ health_tip }} </span> -->
+        <span id="tip-context"> Loading... </span>
       </div>
     </div>
   </div>
@@ -203,17 +196,34 @@
 
   appointmentCloseBtn.addEventListener("click", () => appointmentModal.style.display = "none");
 
-  // Health Tip Modal
-  const HealthTipModal = document.getElementById("health-tip-modal");
-  const HealthTipBtn = document.getElementById("health-tip-btn");
-  const HealthTipCloseBtn = HealthTipModal.querySelector(".health-tip-close-btn");
+// health tip updated
+const HealthTipModal = document.getElementById("health-tip-modal");
+const HealthTipBtn = document.getElementById("health-tip-btn");
+const HealthTipCloseBtn = HealthTipModal.querySelector(".health-tip-close-btn");
+const TipContent = document.getElementById("tip-context");
 
-  HealthTipBtn.addEventListener("click", e => {
-    e.preventDefault();
-    HealthTipModal.style.display = "block";
-  });
+HealthTipBtn.addEventListener("click", function(event) {
+  event.preventDefault();
 
-  HealthTipCloseBtn.addEventListener("click", () => HealthTipModal.style.display = "none");
+  // Show loading while fetching
+  TipContent.textContent = "Loading...";
+
+  fetch('/random-health-tip/')  // make sure this URL matches your Django URL config
+    .then(response => response.json())
+    .then(data => {
+      TipContent.textContent = data.health_tip;
+      HealthTipModal.style.display = "block";
+    })
+    .catch(error => {
+      TipContent.textContent = "Failed to load health tip.";
+      HealthTipModal.style.display = "block";
+      console.error('Error fetching tip:', error);
+    });
+});
+
+HealthTipCloseBtn.addEventListener("click", function() {
+  HealthTipModal.style.display = "none";
+});
 
   // Close modals when clicking outside them
   window.addEventListener("click", e => {
