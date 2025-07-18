@@ -1,0 +1,71 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+.env
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# PyCharm
+.idea/
+
+# Virtual Environments
+env/
+venv/
+ENV/
+VENV/
+env.bak/
+venv.bak/
+
+# Pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+.nox/
+
+# Pytest
+.cache
+
+# Migrations (optional – if you prefer not to track generated files)
+**/migrations/*.pyc
+**/migrations/__pycache__/
+# Uncomment the next line if you don't want to track initial migrations
+# **/migrations/*.py
+
+# Static files
+staticfiles/
+static/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+
+# Pylint
+.pylint.d/
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# JetBrains IDEs
+*.iml
+.idea/
