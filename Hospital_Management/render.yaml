@@ -3,7 +3,8 @@ services:
     name: hospital-management
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn Hospital_Management.wsgi:application
+    startCommand: gunicorn Hospital_Management.wsgi
+
     envVars:
       - key: DJANGO_SECRET_KEY
         value: your-secret-key-here
